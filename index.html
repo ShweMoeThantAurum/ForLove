@@ -1,255 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Summary</title>
+    <title>Payment Reminder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #6b7280, #3b82f6);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fee2e2, #fef3c7);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-
         .container {
-            max-width: 900px;
+            max-width: 500px;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            border: 2px solid #ef4444;
         }
-
-        .section-title {
+        .title {
             font-size: 1.8em;
             font-weight: 700;
-            color: #1e40af;
-            margin-bottom: 20px;
+            color: #b91c1c;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 8px;
+            text-transform: uppercase;
         }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-bottom: 30px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        th,
-        td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        th {
-            background: #1e40af;
-            color: white;
-            font-weight: 600;
-        }
-
-        tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        tr:hover {
-            background: #dbeafe;
-            transition: background 0.3s ease;
-        }
-
-        .total {
+        .amount {
+            font-size: 2.8em;
             font-weight: 700;
-            color: #1e40af;
+            color: #ef4444;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        .description {
             font-size: 1.1em;
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-weight: 400;
         }
-
-        .card {
-            margin-bottom: 40px;
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        h1 {
-            font-size: 2.5em;
-            font-weight: 800;
-            color: #1e40af;
-            text-align: center;
-            margin-bottom: 40px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
         .icon {
-            color: #3b82f6;
+            color: #b91c1c;
+            font-size: 1.4em;
+        }
+        .card {
+            animation: slideIn 0.6s ease-out;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <h1><i class="fas fa-wallet icon"></i> Expense Summary</h1>
-
-        <!-- St. Catherine’s Park & Malahide -->
-        <div class="card">
-            <div class="section-title"><i class="fas fa-map-marker-alt icon"></i> St. Catherine’s Park & Malahide</div>
-            <table>
-                <tr>
-                    <th>Item</th>
-                    <th>Cost (€)</th>
-                </tr>
-                <tr>
-                    <td>Bonobo</td>
-                    <td>14.20</td>
-                </tr>
-                <tr>
-                    <td>မာလာထန်</td>
-                    <td>23.79</td>
-                </tr>
-                <tr>
-                    <td>Starbucks</td>
-                    <td>7.15</td>
-                </tr>
-                <tr>
-                    <td>ကြက်သားကြော် မာလာဟိုက်</td>
-                    <td>9.90</td>
-                </tr>
-                <tr>
-                    <td>Nana’s Tea</td>
-                    <td>13.80</td>
-                </tr>
-                <tr>
-                    <td class="total">Subtotal</td>
-                    <td class="total">68.84</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Portmarnock (Thursday) -->
-        <div class="card">
-            <div class="section-title"><i class="fas fa-map-marker-alt icon"></i> Portmarnock (Thursday)</div>
-            <table>
-                <tr>
-                    <th>Item</th>
-                    <th>Cost (€)</th>
-                </tr>
-                <tr>
-                    <td>Nana’s Passion Orange Iced Tea</td>
-                    <td>7.40</td>
-                </tr>
-                <tr>
-                    <td>ဟော့ပေါ့</td>
-                    <td>66.00</td>
-                </tr>
-                <tr>
-                    <td>Vanilla Latte (after swimming)</td>
-                    <td>5.00</td>
-                </tr>
-                <tr>
-                    <td>Fish and Chips</td>
-                    <td>14.90</td>
-                </tr>
-                <tr>
-                    <td>မနက်စာ (ဦးဂတုံးဆိုင်)</td>
-                    <td>22.75</td>
-                </tr>
-                <tr>
-                    <td class="total">Subtotal</td>
-                    <td class="total">116.05</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Killiney Hill (Friday) -->
-        <div class="card">
-            <div class="section-title"><i class="fas fa-map-marker-alt icon"></i> Killiney Hill (Friday)</div>
-            <table>
-                <tr>
-                    <th>Item</th>
-                    <th>Cost (€)</th>
-                </tr>
-                <tr>
-                    <td>မာလာထန်</td>
-                    <td>19.24</td>
-                </tr>
-                <tr>
-                    <td>Nana’s Tea (Bubble Tea)</td>
-                    <td>6.40</td>
-                </tr>
-                <tr>
-                    <td>ဝက်ဂုတ်သား</td>
-                    <td>15.00</td>
-                </tr>
-                <tr>
-                    <td>Full Moon</td>
-                    <td>42.00</td>
-                </tr>
-                <tr>
-                    <td>The Art of Coffee</td>
-                    <td>13.25</td>
-                </tr>
-                <tr>
-                    <td class="total">Subtotal</td>
-                    <td class="total">95.89</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Total and Per Person -->
-        <div class="card">
-            <div class="section-title"><i class="fas fa-calculator icon"></i> Summary</div>
-            <table>
-                <tr>
-                    <td class="total">Total</td>
-                    <td class="total">280.78</td>
-                </tr>
-                <tr>
-                    <td class="total">Each Pays</td>
-                    <td class="total">140.39</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Room Costs -->
-        <div class="card">
-            <div class="section-title"><i class="fas fa-home icon"></i> Room Costs</div>
-            <table>
-                <tr>
-                    <td>Service Fee</td>
-                    <td>120.00 (60.00 each)</td>
-                </tr>
-                <tr>
-                    <td>Room Fee</td>
-                    <td>500.00 (250.00 each)</td>
-                </tr>
-                <tr>
-                    <td>120 လွှဲထားတဲ့ဟာ</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td class="total">Total with Room Costs</td>
-                    <td class="total">570.39</td>
-                </tr>
-            </table>
-        </div>
+    <div class="container card">
+        <h1 class="title"><i class="fas fa-bell icon"></i> Payment Reminder</h1>
+        <p class="amount">အခန်းဖိုး €250.00ဘဲ ကျန်</p>
     </div>
 
     <script>
-        // Smooth scroll for any anchor links (if added later)
+        // Smooth scroll for anchor links (if added later)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
@@ -258,5 +88,4 @@
         });
     </script>
 </body>
-
 </html>
