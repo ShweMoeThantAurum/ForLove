@@ -1,91 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Reminder</title>
+    <title>Our Shared Expenses</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #fee2e2, #fef3c7);
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #fce7f3, #e9d5ff);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
+
         .container {
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
+            max-width: 700px;
+            background: #fff1f8;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            text-align: center;
-            border: 2px solid #ef4444;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #fbcfe8;
+            position: relative;
         }
+
         .title {
-            font-size: 1.8em;
+            font-family: 'Merriweather', serif;
+            font-size: 2.2em;
             font-weight: 700;
-            color: #b91c1c;
-            margin-bottom: 15px;
+            color: #be185d;
+            margin-bottom: 20px;
+            text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            text-transform: uppercase;
+            gap: 10px;
         }
-        .amount {
-            font-size: 2.8em;
+
+        .section-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.6em;
             font-weight: 700;
-            color: #ef4444;
+            color: #be185d;
             margin-bottom: 15px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-            animation: pulse 1.5s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .description {
-            font-size: 1.1em;
-            color: #1f2937;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 20px;
-            font-weight: 400;
+            background: #ffffff;
+            border: 1px solid #f9a8d4;
         }
-        .icon {
-            color: #b91c1c;
-            font-size: 1.4em;
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #f9a8d4;
+            color: #4b5563;
         }
+
+        th {
+            background: #f5d0fe;
+            color: #7e22ce;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #fdf2f8;
+        }
+
+        tr:hover {
+            background: #f3e8ff;
+            transition: background 0.3s ease;
+        }
+
+        .total {
+            font-weight: 700;
+            color: #be185d;
+            font-size: 1.1em;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: #dc2626;
+            font-size: 1.2em;
+        }
+
         .card {
-            animation: slideIn 0.6s ease-out;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            padding: 15px;
+            background: #fff1f8;
+            border: 1px solid #fbcfe8;
+            animation: fadeIn 0.7s ease-out;
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+
+        .note {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1em;
+            color: #6b7280;
+            text-align: center;
+            margin-top: 15px;
+            line-height: 1.5;
+            font-style: italic;
         }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .icon {
+            color: #db2777;
+            font-size: 1.3em;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="container card">
-        <h1 class="title"><i class="fas fa-bell icon"></i> Payment Reminder</h1>
-        <p class="amount">အခန်းဖိုး €250.00ဘဲ ကျန်</p>
+    <div class="container">
+        <h1 class="title"><i class="fas fa-heart icon"></i> Our Shared Expenses</h1>
+
+        <!-- Recent Expenses -->
+        <div class="card">
+            <div class="section-title"><i class="fas fa-shopping-bag icon"></i> Our Recent Adventures</div>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Cost (€)</th>
+                </tr>
+                <tr>
+                    <td>Super Asia Foods</td>
+                    <td>8.50</td>
+                </tr>
+                <tr>
+                    <td>Strawberry</td>
+                    <td>9.50</td>
+                </tr>
+                <tr>
+                    <td>Churro</td>
+                    <td>7.00</td>
+                </tr>
+                <tr>
+                    <td>မာလာရှမ်းကော</td>
+                    <td>21.80</td>
+                </tr>
+                <tr>
+                    <td>Temple Bar ဘီယာ</td>
+                    <td>20.60</td>
+                </tr>
+                <tr>
+                    <td>ဝက်ခပေါင်း</td>
+                    <td>7.90</td>
+                </tr>
+                <tr>
+                    <td>Sleeping Mask</td>
+                    <td>17.98</td>
+                </tr>
+                <tr>
+                    <td>AirPods Case</td>
+                    <td>17.49</td>
+                </tr>
+                <tr>
+                    <td class="total">Subtotal</td>
+                    <td class="total">110.77</td>
+                </tr>
+                <tr>
+                    <td class="total">Each Pays</td>
+                    <td class="total">55.39</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Payment Reminder -->
+        <div class="card">
+            <div class="section-title"><i class="fas fa-home icon"></i> Little Reminder, မမ</div>
+            <table>
+                <tr>
+                    <td>အခန်းဖိုး</td>
+                    <td class="highlight">€250.00</td>
+                </tr>
+                <tr>
+                    <td>Your Expense Share</td>
+                    <td class="highlight">€55.39</td>
+                </tr>
+                <tr>
+                    <td class="total">Total You Owe</td>
+                    <td class="total highlight">€305.39</td>
+                </tr>
+            </table>
+            <p class="note">မမ အကြွေးမြန်မြန်ဆပ်ရင်ဆပ် မဆပ်ရင် လူကိုသိမ်းပစ်မည်။ 💕</p>
+        </div>
     </div>
 
     <script>
         // Smooth scroll for anchor links (if added later)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
             });
         });
+
+        // Animate cards on scroll
+        const cards = document.querySelectorAll('.card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(15px)';
+            observer.observe(card);
+        });
     </script>
 </body>
+
 </html>
