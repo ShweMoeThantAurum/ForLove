@@ -2,17 +2,17 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Shared Expenses</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Just for You, Love 🩷</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;700&display=swap');
 
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #fce7f3, #e9d5ff);
+            background: linear-gradient(135deg, #ffe6e6, #fff0f5);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -21,107 +21,108 @@
         }
 
         .container {
-            max-width: 700px;
-            background: #fff1f8;
+            max-width: 650px;
+            background: #fffafc;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            border: 1px solid #fbcfe8;
-            position: relative;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f8bbd0;
+            text-align: center;
         }
 
         .title {
-            font-family: 'Merriweather', serif;
-            font-size: 2.2em;
-            font-weight: 700;
-            color: #be185d;
-            margin-bottom: 20px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5em;
+            color: #d63384;
+            margin-bottom: 15px;
         }
 
         .section-title {
-            font-family: 'Merriweather', serif;
-            font-size: 1.6em;
-            font-weight: 700;
-            color: #be185d;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-family: 'Pacifico', cursive;
+            font-size: 1.7em;
+            color: #c2185b;
+            margin: 25px 0 15px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            background: #ffffff;
-            border: 1px solid #f9a8d4;
+            background: #fff0f5;
+            border: 1px solid #f8bbd0;
         }
 
         th,
         td {
-            padding: 12px;
+            padding: 14px;
             text-align: left;
-            border-bottom: 1px solid #f9a8d4;
-            color: #4b5563;
+            border-bottom: 1px solid #f8bbd0;
+            color: #6d4c41;
         }
 
         th {
-            background: #f5d0fe;
-            color: #7e22ce;
+            background: #fce4ec;
+            color: #ad1457;
             font-weight: 600;
         }
 
         tr:nth-child(even) {
-            background: #fdf2f8;
+            background: #fdf0f5;
         }
 
         tr:hover {
-            background: #f3e8ff;
+            background: #fce4ec;
             transition: background 0.3s ease;
         }
 
-        .total {
-            font-weight: 700;
-            color: #be185d;
-            font-size: 1.1em;
+        .reminder {
+            background: #fff;
+            border: 2px solid #f8bbd0;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            animation: slideIn 0.7s ease-out;
         }
 
-        .highlight {
-            font-weight: 700;
-            color: #dc2626;
-            font-size: 1.2em;
+        .reminder-content {
+            font-size: 1.1em;
+            color: #5d4037;
+        }
+
+        .reminder-amount {
+            font-family: 'Pacifico', cursive;
+            font-size: 2em;
+            color: #e91e63;
+            margin: 10px 0;
+        }
+
+        .reminder-note {
+            font-size: 1em;
+            color: #6d4c41;
+            font-style: italic;
+            margin-top: 10px;
         }
 
         .card {
-            margin-bottom: 25px;
             border-radius: 10px;
             padding: 15px;
-            background: #fff1f8;
-            border: 1px solid #fbcfe8;
-            animation: fadeIn 0.7s ease-out;
+            background: #fffafc;
+            border: 1px solid #f8bbd0;
+            animation: slideIn 0.7s ease-out;
         }
 
-        .note {
-            font-family: 'Roboto', sans-serif;
-            font-size: 1em;
-            color: #6b7280;
-            text-align: center;
-            margin-top: 15px;
-            line-height: 1.5;
-            font-style: italic;
+        .highlight {
+            font-weight: bold;
+            color: #e91e63;
         }
 
         .icon {
-            color: #db2777;
-            font-size: 1.3em;
+            color: #e91e63;
+            font-size: 1.4em;
         }
 
-        @keyframes fadeIn {
+        @keyframes slideIn {
             from {
                 opacity: 0;
                 transform: translateY(15px);
@@ -137,106 +138,50 @@
 
 <body>
     <div class="container">
-        <h1 class="title"><i class="fas fa-heart icon"></i> Our Shared Expenses</h1>
+        <!-- Reminder Section -->
+        <div class="reminder">
+            <div class="reminder-content">
+                <i class="fas fa-heart icon"></i>
+                <p class="reminder-amount">€250</p>
+                <p>အခန်းခပေးရန် ကျန်။</p>
+            </div>
+        </div>
 
-        <!-- Recent Expenses -->
+        <!-- Title and Table -->
+        <h1 class="title">Our Shared Little Adventures 💑</h1>
         <div class="card">
-            <div class="section-title"><i class="fas fa-shopping-bag icon"></i> Our Recent Adventures</div>
             <table>
                 <tr>
-                    <th>Item</th>
+                    <th>Memory</th>
                     <th>Cost (€)</th>
                 </tr>
                 <tr>
-                    <td>Super Asia Foods</td>
-                    <td>8.50</td>
+                    <td>Movie Ticket</td>
+                    <td>46.90</td>
                 </tr>
                 <tr>
-                    <td>Strawberry</td>
-                    <td>9.50</td>
-                </tr>
-                <tr>
-                    <td>Churro</td>
-                    <td>7.00</td>
-                </tr>
-                <tr>
-                    <td>မာလာရှမ်းကော</td>
-                    <td>21.80</td>
-                </tr>
-                <tr>
-                    <td>Temple Bar ဘီယာ</td>
-                    <td>20.60</td>
-                </tr>
-                <tr>
-                    <td>ဝက်ခပေါင်း</td>
-                    <td>7.90</td>
-                </tr>
-                <tr>
-                    <td>Sleeping Mask</td>
-                    <td>17.98</td>
-                </tr>
-                <tr>
-                    <td>AirPods Case</td>
-                    <td>17.49</td>
-                </tr>
-                <tr>
-                    <td class="total">Subtotal</td>
-                    <td class="total">110.77</td>
-                </tr>
-                <tr>
-                    <td class="total">Each Pays</td>
-                    <td class="total">55.39</td>
+                    <td><b>Each Pays</b></td>
+                    <td class="highlight">23.45</td>
                 </tr>
             </table>
         </div>
 
-        <!-- Payment Reminder -->
-        <div class="card">
-            <div class="section-title"><i class="fas fa-home icon"></i> Little Reminder, မမ</div>
-            <table>
-                <tr>
-                    <td>အခန်းဖိုး</td>
-                    <td class="highlight">€250.00</td>
-                </tr>
-                <tr>
-                    <td>Your Expense Share</td>
-                    <td class="highlight">€55.39</td>
-                </tr>
-                <tr>
-                    <td class="total">Total You Owe</td>
-                    <td class="total highlight">€305.39</td>
-                </tr>
-            </table>
-            <p class="note">မမ အကြွေးမြန်မြန်ဆပ်ရင်ဆပ် မဆပ်လျှင် လူကိုသိမ်းပစ်မည်။ 💕</p>
-        </div>
+        <p style="margin-top: 20px; color: #6d4c41;">
+            အကြွေးမဆပ်နိုင်ပါက လူကိုသိမ်းမည်။<br />
+            <span style="font-style: italic;">— မမ့ဘေဘီ။ 👨‍💻💕</span>
+        </p>
     </div>
 
     <script>
-        // Smooth scroll for anchor links (if added later)
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Animate cards on scroll
-        const cards = document.querySelectorAll('.card');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        cards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(15px)';
-            observer.observe(card);
+        // Animate reminders and cards
+        const elements = document.querySelectorAll('.reminder, .card');
+        elements.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(15px)';
+            setTimeout(() => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, 100 * (index + 1));
         });
     </script>
 </body>
