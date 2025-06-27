@@ -1,189 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Just for You, Love 🩷</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide: Processing Electronics Dataset</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;700&display=swap');
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #ffe6e6, #fff0f5);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 650px;
-            background: #fffafc;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-            border: 1px solid #f8bbd0;
-            text-align: center;
-        }
-
-        .title {
-            font-family: 'Pacifico', cursive;
-            font-size: 2.5em;
-            color: #d63384;
-            margin-bottom: 15px;
-        }
-
-        .section-title {
-            font-family: 'Pacifico', cursive;
-            font-size: 1.7em;
-            color: #c2185b;
-            margin: 25px 0 15px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            background: #fff0f5;
-            border: 1px solid #f8bbd0;
-        }
-
-        th,
-        td {
-            padding: 14px;
-            text-align: left;
-            border-bottom: 1px solid #f8bbd0;
-            color: #6d4c41;
-        }
-
-        th {
-            background: #fce4ec;
-            color: #ad1457;
-            font-weight: 600;
-        }
-
-        tr:nth-child(even) {
-            background: #fdf0f5;
-        }
-
-        tr:hover {
-            background: #fce4ec;
-            transition: background 0.3s ease;
-        }
-
-        .reminder {
-            background: #fff;
-            border: 2px solid #f8bbd0;
-            border-radius: 12px;
-            padding: 24px;
-            margin: 20px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            animation: slideIn 0.7s ease-out;
-        }
-
-        .reminder-content {
-            font-size: 1.1em;
-            color: #5d4037;
-        }
-
-        .reminder-amount {
-            font-family: 'Pacifico', cursive;
-            font-size: 2em;
-            color: #e91e63;
-            margin: 10px 0;
-        }
-
-        .reminder-note {
-            font-size: 1em;
-            color: #6d4c41;
-            font-style: italic;
-            margin-top: 10px;
-        }
-
-        .card {
-            border-radius: 10px;
-            padding: 15px;
-            background: #fffafc;
-            border: 1px solid #f8bbd0;
-            animation: slideIn 0.7s ease-out;
-        }
-
-        .highlight {
-            font-weight: bold;
-            color: #e91e63;
-        }
-
-        .icon {
-            color: #e91e63;
-            font-size: 1.4em;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f8f9fa; }
+        .container { max-width: 800px; }
+        h1 { color: #343a40; }
+        h2, h3 { color: #495057; }
+        pre { background: #e9ecef; padding: 15px; border-radius: 5px; }
+        a { color: #007bff; }
+        .section { margin-bottom: 30px; }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <!-- Reminder Section -->
-        <div class="reminder">
-            <div class="reminder-content">
-                <i class="fas fa-heart icon"></i>
-                <p class="reminder-amount">€250</p>
-                <p>အခန်းခပေးရန် ကျန်။</p>
-            </div>
+        <h1 class="text-center mb-4">Guide: Processing Electronics Dataset</h1>
+
+        <div class="section">
+            <h2>Phase 1: Data Preparation</h2>
+            <p>Download the dataset from Kaggle and reduce it to 4GB using the following Python script on your local machine:</p>
+            <pre>
+import os
+
+# Configure file paths
+input_file = os.path.expanduser("~/Downloads/Electronics.json")
+output_file = os.path.expanduser("~/Downloads/Electronics_4GB.json")
+target_size = 4 * 1024 * 1024 * 1024  # 4 GB in bytes
+
+# Parse and write to output
+with open(input_file, 'r', encoding='utf-8') as infile, open(output_file, 'w', encoding='utf-8') as outfile:
+    total_bytes = 0
+    for line in infile:
+        line_bytes = len(line.encode('utf-8'))
+        if total_bytes + line_bytes > target_size:
+            break
+        outfile.write(line)
+        total_bytes += line_bytes
+
+print(f"✅ Done! Output file size: {total_bytes / (1024**3):.2f} GB")
+            </pre>
+            <p>Upload the reduced dataset (<code>Electronics_4GB.json</code>) to an S3 bucket.</p>
         </div>
 
-        <!-- Title and Table -->
-        <h1 class="title">Our Shared Little Adventures 💑</h1>
-        <div class="card">
-            <table>
-                <tr>
-                    <th>Memory</th>
-                    <th>Cost (€)</th>
-                </tr>
-                <tr>
-                    <td>Movie Ticket</td>
-                    <td>46.90</td>
-                </tr>
-                <tr>
-                    <td><b>Each Pays</b></td>
-                    <td class="highlight">23.45</td>
-                </tr>
-            </table>
+        <div class="section">
+            <h2>Phase 1: AWS EMR Setup and Processing</h2>
+            <p>Start a session in AWS Learner Lab and create an EMR cluster with 2 cores. SSH into the EMR master node, install necessary dependencies, and run the following PySpark script. Update S3 paths as needed:</p>
+            <pre>
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, lower
+
+# Initialize Spark session
+spark = SparkSession.builder \
+    .appName("ElectronicsDataIngestion") \
+    .config("spark.hadoop.fs.s3a.endpoint", "s3.us-east-1.amazonaws.com") \
+    .getOrCreate()
+
+# S3 paths
+input_path = "s3://electronics-reviews-bucket/Electronics_4GB.json"
+output_path = "s3://electronics-reviews-bucket/processed_data/"
+checkpoint_path = "s3://electronics-reviews-bucket/checkpoints/"
+
+# Read JSON file
+df = spark.read.json(input_path)
+
+# Basic preprocessing (lowercase reviewText)
+df = df.select(
+    col("asin"),
+    col("overall"),
+    col("reviewText"),
+    col("reviewTime"),
+    lower(col("reviewText")).alias("cleaned_reviewText")
+)
+
+# Set checkpoint directory
+spark.sparkContext.setCheckpointDir(checkpoint_path)
+
+# Checkpoint DataFrame
+df.checkpoint()
+
+# Save processed data to S3 (parquet format)
+df.write.mode("overwrite").parquet(output_path)
+
+# Log metrics
+print(f"Total records ingested: {df.count()}")
+print(f"Output saved to: {output_path}")
+
+# Stop Spark session
+spark.stop()
+            </pre>
+            <p>This stores <code>processed_data</code> and <code>checkpoints</code> in S3. Note: Step 2 of Phase 1 was skipped.</p>
         </div>
 
-        <p style="margin-top: 20px; color: #6d4c41;">
-            အကြွေးမဆပ်နိုင်ပါက လူကိုသိမ်းမည်။<br />
-            <span style="font-style: italic;">— မမ့ဘေဘီ။ 👨‍💻💕</span>
-        </p>
+        <div class="section">
+            <h2>Phase 2: MapReduce and Sentiment Analysis</h2>
+            <p>Run the following PySpark script on the EMR master node for sentiment analysis and word count. The sentiment analysis works, but the word count has errors. Focus on fixing the word count for MapReduce. Update S3 paths as needed:</p>
+            <pre>
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, udf, explode, split, year, to_date, collect_list, struct
+from pyspark.sql.types import StringType, FloatType
+from pyspark.ml.feature import StopWordsRemover, Tokenizer
+from textblob import TextBlob
+
+# Initialize Spark session
+spark = SparkSession.builder \
+    .appName("ElectronicsProcessing") \
+    .config("spark.hadoop.fs.s3a.endpoint", "s3.us-east-1.amazonaws.com") \
+    .config("spark.sql.shuffle.partitions", "32") \
+    .getOrCreate()
+
+# Advanced sentiment analysis
+def get_sentiment(rating, review_text):
+    try:
+        rating = float(rating)
+        polarity = TextBlob(review_text).sentiment.polarity if review_text else 0.0
+        rating_sentiment = "positive" if rating >= 4.0 else "neutral" if rating == 3.0 else "negative"
+        text_sentiment = "positive" if polarity > 0.1 else "neutral" if -0.1 <= polarity <= 0.1 else "negative"
+        if rating_sentiment == text_sentiment:
+            return rating_sentiment
+        elif rating >= 4.0 and polarity <= -0.5:
+            return "negative"
+        elif rating <= 2.0 and polarity >= 0.5:
+            return "positive"
+        else:
+            return "neutral"
+    except:
+        return "unknown"
+
+# Register UDF
+sentiment_udloten = udf(get_sentiment, StringType())
+
+# Read parquet files
+input_path = "s3://electronics-reviews-bucket/processed_data/"
+df = spark.read.parquet(input_path).cache()
+
+# Sentiment Analysis (MapReduce: map text+rating to sentiment, reduce to count)
+df_sentiment = df.withColumn("sentiment", sentiment_udf(col("overall"), col("cleaned_reviewText")))
+
+# Save sentiment results
+sentiment_output = "s3://electronics-reviews-bucket/results/sentiment/"
+df_sentiment.select("asin", "overall", "cleaned_reviewText", "sentiment", "reviewTime") \
+    .write.mode("overwrite").parquet(sentiment_output)
+
+# Compute and display sentiment distribution
+sentiment_dist = df_sentiment.groupBy("sentiment").count()
+sentiment_dist.show()
+
+# Word Count (MapReduce: map to words, reduce to frequencies per year)
+# Extract year from reviewTime
+df = df.withColumn("year", year(to_date(col("reviewTime"), "MM dd, yyyy")))
+
+# Map: Tokenize reviewText
+tokenizer = Tokenizer(inputCol="cleaned_reviewText", outputCol="words")
+df = tokenizer.transform(df)
+
+# Map: Remove stop words
+remover = StopWordsRemover(inputCol="words", outputCol="filtered_words")
+df = remover.transform(df)
+
+# Map: Explode words to rows
+df_words = df.select("year", explode(col("filtered_words")).alias("word")) \
+    .filter(col("word") != "")
+
+# Reduce: Compute word frequencies per year
+word_freq = df_words.groupBy("year", "word").count()
+
+# Get top 5 words per year
+top_words = word_freq.orderBy("year", col("count").desc()) \
+    .groupBy("year") \
+    .agg(collect_list(struct("word", "count")).alias("top_words")) \
+    .select("year", expr("slice(top_words, 1, 5)").alias("top_5_words"))
+
+# Save word count results
+wordcount_output = "s3://electronics-reviews-bucket/results/wordcount/"
+top_words.write.mode("overwrite").parquet(wordcount_output)
+
+# Show sample word count results
+top_words.show(10, truncate=50)
+
+# Stop Spark session
+spark.stop()
+            </pre>
+            <p><strong>Notes:</strong> Sentiment analysis is functional. Word count has errors; focus on fixing it for MapReduce. Choose sentiment analysis over hashtag trends for this dataset.</p>
+        </div>
+
+        <div class="section">
+            <h2>Additional Resources</h2>
+            <p>Check my Grok chat for more details: <a href="https://grok.com/share/bGVnYWN5_f4d01b0f-5f44-4c81-8d04-d3e4f6055358" target="_blank">Grok Chat Link</a></p>
+        </div>
     </div>
-
-    <script>
-        // Animate reminders and cards
-        const elements = document.querySelectorAll('.reminder, .card');
-        elements.forEach((el, index) => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(15px)';
-            setTimeout(() => {
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            }, 100 * (index + 1));
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
