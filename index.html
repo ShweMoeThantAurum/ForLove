@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guide: Processing Electronics Dataset</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f8f9fa; }
-        .container { max-width: 800px; }
-        h1 { color: #343a40; }
-        h2, h3 { color: #495057; }
-        pre { background: #e9ecef; padding: 15px; border-radius: 5px; }
-        a { color: #007bff; }
-        .section { margin-bottom: 30px; }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
-<body>
-    <div class="container">
-        <h1 class="text-center mb-4">Guide: Processing Electronics Dataset</h1>
 
-        <div class="section">
-            <h2>Phase 1: Data Preparation</h2>
-            <p>Download the dataset from Kaggle and reduce it to 4GB using the following Python script on your local machine:</p>
-            <pre>
+<body class="bg-gray-50 font-sans antialiased">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Guide: Processing Electronics Dataset</h1>
+            <p class="text-lg text-gray-600">Scalable Cloud-Based Sentiment Analysis for Amazon Electronics Reviews</p>
+        </header>
+
+        <main>
+            <section class="bg-white rounded-lg shadow-md p-6 mb-6" aria-labelledby="phase1-data-prep">
+                <h2 id="phase1-data-prep" class="text-2xl font-semibold text-gray-700 mb-4">Phase 1: Data Preparation
+                </h2>
+                <p class="mb-4 text-gray-600">Download the dataset from Kaggle and reduce it to 4GB using the following
+                    Python script on your local machine:</p>
+                <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto"><code class="language-python">
 import os
 
 # Configure file paths
@@ -40,78 +43,270 @@ with open(input_file, 'r', encoding='utf-8') as infile, open(output_file, 'w', e
         outfile.write(line)
         total_bytes += line_bytes
 
-print(f"✅ Done! Output file size: {total_bytes / (1024**3):.2f} GB")
-            </pre>
-            <p>Upload the reduced dataset (<code>Electronics_4GB.json</code>) to an S3 bucket.</p>
-        </div>
+print(f"Done! Output file size: {total_bytes / (1024**3):.2f} GB")
+                </code></pre>
+                <p class="mt-4 text-gray-600">Upload the reduced dataset (<code>Electronics_4GB.json</code>) to an S3
+                    bucket.</p>
+            </section>
 
-        <div class="section">
-            <h2>Phase 1: AWS EMR Setup and Processing</h2>
-            <p>Start a session in AWS Learner Lab and create an EMR cluster with 2 cores. SSH into the EMR master node, install necessary dependencies, and run the following PySpark script. Update S3 paths as needed:</p>
-            <pre>
+            <section class="bg-white rounded-lg shadow-md p-6 mb-6" aria-labelledby="phase1-emr">
+                <h2 id="phase1-emr" class="text-2xl font-semibold text-gray-700 mb-4">Phase 1: AWS EMR Setup and
+                    Processing</h2>
+
+                <h3 class="text-xl font-medium text-gray-600 mb-2">EMR Bootstrap Script</h3>
+                <p class="mb-4 text-gray-600">When creating the EMR cluster, use the following bootstrap script to
+                    install required Python packages and NLTK datasets for sentiment analysis:</p>
+                <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto"><code class="language-bash">
+#!/bin/bash
+sudo pip3 install textblob numpy nltk
+sudo python3 -c "import nltk; nltk.download('punkt', download_dir='/usr/local/lib/python3.8/dist-packages/nltk_data'); nltk.download('averaged_perceptron_tagger', download_dir='/usr/local/lib/python3.8/dist-packages/nltk_data')"
+                </code></pre>
+                <p class="mt-4 text-gray-600">This script installs <code>textblob</code>, <code>numpy</code>, and
+                    <code>nltk</code>, and downloads the <code>punkt</code> and <code>averaged_perceptron_tagger</code>
+                    datasets to the specified directory for use in the sentiment analysis process.
+                </p>
+
+                <h3 class="text-xl font-medium text-gray-600 mb-2">EMR Processing Script</h3>
+                <p class="mb-4 text-gray-600">Start a session in AWS Learner Lab and create an EMR cluster with 2 cores.
+                    SSH into the EMR master node and run the following PySpark script. Update S3 paths as needed:</p>
+                <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto"><code class="language-python">
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, lower
+from pyspark.sql.types import StructType, StructField, StringType
 
 # Initialize Spark session
 spark = SparkSession.builder \
-    .appName("ElectronicsDataIngestion") \
+    .appName("ElectronicsTextDataIngestion") \
     .config("spark.hadoop.fs.s3a.endpoint", "s3.us-east-1.amazonaws.com") \
+    .config("spark.sql.json.lines", "true") \
     .getOrCreate()
 
 # S3 paths
 input_path = "s3://electronics-reviews-bucket/Electronics_4GB.json"
-output_path = "s3://electronics-reviews-bucket/processed_data/"
-checkpoint_path = "s3://electronics-reviews-bucket/checkpoints/"
+output_path = "s3://electronics-reviews-bucket/processed_text_data_original/"
 
-# Read JSON file
-df = spark.read.json(input_path)
+# Define schema to ensure correct parsing
+schema = StructType([
+    StructField("reviewText", StringType(), True),
+])
 
-# Basic preprocessing (lowercase reviewText)
-df = df.select(
-    col("asin"),
-    col("overall"),
-    col("reviewText"),
-    col("reviewTime"),
-    lower(col("reviewText")).alias("cleaned_reviewText")
-)
+# Read JSON file as JSON Lines
+try:
+    df_text = spark.read \
+        .option("multiLine", False) \
+        .option("mode", "PERMISSIVE") \
+        .schema(schema) \
+        .json(input_path) \
+        .select(lower(col("reviewText")).alias("cleaned_reviewText")) \
+        .filter(col("reviewText").isNotNull())
 
-# Set checkpoint directory
-spark.sparkContext.setCheckpointDir(checkpoint_path)
+    # Log schema and sample data for debugging
+    print("DataFrame Schema:")
+    df_text.printSchema()
+    print("Sample Data (first 5 rows):")
+    df_text.show(5, truncate=False)
 
-# Checkpoint DataFrame
-df.checkpoint()
+    # Save processed text data to S3 in Parquet format
+    df_text.write.mode("overwrite").parquet(output_path)
 
-# Save processed data to S3 (parquet format)
-df.write.mode("overwrite").parquet(output_path)
+    # Log metrics
+    record_count = df_text.count()
+    print(f"Total records ingested: {record_count}")
+    print(f"Text data saved to: {output_path}")
 
-# Log metrics
-print(f"Total records ingested: {df.count()}")
-print(f"Output saved to: {output_path}")
+except Exception as e:
+    print(f"Error during data ingestion: {str(e)}")
 
 # Stop Spark session
 spark.stop()
-            </pre>
-            <p>This stores <code>processed_data</code> and <code>checkpoints</code> in S3. Note: Step 2 of Phase 1 was skipped.</p>
-        </div>
+                </code></pre>
+                <p class="mt-4 text-gray-600">This stores <code>processed_data</code> and <code>checkpoints</code> in
+                    S3. Note: Step 2 of Phase 1 was skipped.</p>
+            </section>
 
-        <div class="section">
-            <h2>Phase 2: MapReduce and Sentiment Analysis</h2>
-            <p>Run the following PySpark script on the EMR master node for sentiment analysis and word count. The sentiment analysis works, but the word count has errors. Focus on fixing the word count for MapReduce. Update S3 paths as needed:</p>
-            <pre>
+            <section class="bg-white rounded-lg shadow-md p-6 mb-6" aria-labelledby="phase2">
+                <h2 id="phase2" class="text-2xl font-semibold text-gray-700 mb-4">Phase 2: MapReduce and Sentiment
+                    Analysis</h2>
+                <p class="mb-4 text-gray-600">Run the following PySpark script on the EMR master node for sentiment
+                    analysis and word count. The sentiment analysis works, but the word count has errors. Focus on
+                    fixing the word count for MapReduce. Update S3 paths as needed:</p>
+
+                <h3 class="text-xl font-medium text-gray-600 mb-2">Word Count</h3>
+                <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto"><code class="language-python">
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, udf, explode, split, year, to_date, collect_list, struct
-from pyspark.sql.types import StringType, FloatType
-from pyspark.ml.feature import StopWordsRemover, Tokenizer
-from textblob import TextBlob
+from pyspark.sql.functions import col, explode, year, to_date, collect_list, struct, expr
+from pyspark.ml.feature import Tokenizer, StopWordsRemover
+import time
+import logging
+import json
+import boto3
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Initialize Spark session
 spark = SparkSession.builder \
-    .appName("ElectronicsProcessing") \
+    .appName("KeywordExtraction") \
     .config("spark.hadoop.fs.s3a.endpoint", "s3.us-east-1.amazonaws.com") \
     .config("spark.sql.shuffle.partitions", "32") \
+    .config("spark.driver.memory", "4g") \
+    .config("spark.executor.memory", "8g") \
+    .config("spark.sql.legacy.timeParserPolicy", "LEGACY") \
     .getOrCreate()
 
-# Advanced sentiment analysis
+# Input and output paths
+input_path = "s3://electronics-reviews-bucket/processed_data/"
+output_path = "s3://electronics-reviews-bucket/keyword_results/"
+
+# Step 1: Read parquet files from S3 and cache dataframe
+start_time = time.time()
+try:
+    df = spark.read.parquet(input_path).cache()
+    total_records = df.count()
+except Exception as e:
+    logger.error(f"Error reading parquet: {str(e)}")
+    spark.stop()
+    exit(1)
+read_time = time.time() - start_time
+logger.info(f"Read {total_records} records in {read_time:.2f} seconds")
+
+# Step 2: Parse date and extract year
+try:
+    df = df.withColumn("parsed_date", to_date(col("reviewTime"), "MM d, yyyy")) \
+        .withColumn("year", year(col("parsed_date")))
+except Exception as e:
+    logger.error(f"Error in date parsing: {str(e)}")
+    spark.stop()
+    exit(1)
+
+# Step 3: Tokenize cleaned_reviewText
+tokenize_start = time.time()
+try:
+    df = df.withColumn("cleaned_reviewText", col("cleaned_reviewText").cast("string")) \
+        .withColumn("cleaned_reviewText", expr("coalesce(cleaned_reviewText, '')"))
+    tokenizer = Tokenizer(inputCol="cleaned_reviewText", outputCol="words")
+    df = tokenizer.transform(df)
+except Exception as e:
+    logger.error(f"Error in tokenization: {str(e)}")
+    spark.stop()
+    exit(1)
+tokenize_time = time.time() - tokenize_start
+
+# Step 4: Remove stop words
+stopwords_start = time.time()
+try:
+    remover = StopWordsRemover(inputCol="words", outputCol="filtered_words")
+    df = remover.transform(df)
+except Exception as e:
+    logger.error(f"Error in stop words removal: {str(e)}")
+    spark.stop()
+    exit(1)
+stopwords_time = time.time() - stopwords_start
+
+# Step 5: Calculate word frequency by year
+wordfreq_start = time.time()
+try:
+    df_words = df.select("year", explode(col("filtered_words")).alias("word")) \
+        .filter(col("word") != "")
+    word_freq = df_words.groupBy("year", "word").count() \
+        .withColumnRenamed("count", "frequency") \
+        .orderBy("year", col("frequency").desc())
+except Exception as e:
+    logger.error(f"Error in word frequency calculation: {str(e)}")
+    spark.stop()
+    exit(1)
+wordfreq_time = time.time() - wordfreq_start
+
+# Step 6: Compute top 5 words per year
+top_words_start = time.time()
+try:
+    top_words = word_freq.groupBy("year") \
+        .agg(collect_list(struct("word", "frequency")).alias("top_words")) \
+        .select("year", expr("slice(top_words, 1, 5)").alias("top_5_words"))
+except Exception as e:
+    logger.error(f"Error in top words calculation: {str(e)}")
+    spark.stop()
+    exit(1)
+top_words_time = time.time() - top_words_start
+
+# Step 7: Save results to S3
+save_start = time.time()
+try:
+    top_words.write \
+        .mode("overwrite") \
+        .partitionBy("year") \
+        .parquet(output_path)
+except Exception as e:
+    logger.error(f"Error saving results: {str(e)}")
+    spark.stop()
+    exit(1)
+save_time = time.time() - save_start
+
+# Step 8: Log and save metrics
+total_time = time.time() - start_time
+throughput = total_records / total_time if total_time > 0 else 0
+latency_per_record = (total_time / total_records) * 1000 if total_records > 0 else 0
+
+metrics = {
+    "total_records": total_records,
+    "read_time_seconds": read_time,
+    "tokenize_time_seconds": tokenize_time,
+    "stopwords_time_seconds": stopwords_time,
+    "wordfreq_time_seconds": wordfreq_time,
+    "top_words_time_seconds": top_words_time,
+    "save_time_seconds": save_time,
+    "total_execution_time_seconds": total_time,
+    "throughput_records_per_second": throughput,
+    "latency_per_record_ms": latency_per_record
+}
+
+try:
+    with open("/tmp/keyword_metrics.json", "w") as f:
+        json.dump(metrics, f, indent=4)
+    s3 = boto3.client("s3")
+    s3.upload_file("/tmp/keyword_metrics.json", "electronics-reviews-bucket", "results/metrics/keyword_metrics.json")
+except Exception as e:
+    logger.error(f"Error saving metrics: {str(e)}")
+    spark.stop()
+    exit(1)
+
+logger.info(f"Metrics: Total Records: {total_records}, Throughput: {throughput:.2f} records/s, "
+    f"Latency: {latency_per_record:.4f} ms, Total Time: {total_time:.2f} s")
+
+# Step 9: Display top words
+try:
+    top_words.show(10, truncate=50)
+except Exception as e:
+    logger.error(f"Error displaying top words: {str(e)}")
+    spark.stop()
+    exit(1)
+
+# Clean up
+spark.stop()
+                </code></pre>
+
+                <h3 class="text-xl font-medium text-gray-600 mb-2">Sentiment Analysis</h3>
+                <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto"><code class="language-python">
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, udf
+from pyspark.sql.types import StringType
+from textblob import TextBlob
+import time
+import json
+import boto3
+
+# Initialize Spark session
+spark = SparkSession.builder \
+    .appName("SentimentAnalysis") \
+    .config("spark.hadoop.fs.s3a.endpoint", "s3.us-east-1.amazonaws.com") \
+    .config("spark.sql.shuffle.partitions", "32") \
+    .config("spark.driver.memory", "4g") \
+    .config("spark.executor.memory", "8g") \
+    .config("spark.sql.legacy.timeParserPolicy", "LEGACY") \
+    .getOrCreate()
+
+# Sentiment analysis UDF
 def get_sentiment(rating, review_text):
     try:
         rating = float(rating)
@@ -130,67 +325,86 @@ def get_sentiment(rating, review_text):
         return "unknown"
 
 # Register UDF
-sentiment_udloten = udf(get_sentiment, StringType())
+sentiment_udf = udf(get_sentVehicles, StringType())
 
 # Read parquet files
+start_time = time.time()
 input_path = "s3://electronics-reviews-bucket/processed_data/"
 df = spark.read.parquet(input_path).cache()
+total_records = df.count()
+read_time = time.time() - start_time
+print(f"Time to read data: {read_time:.2f} seconds")
 
-# Sentiment Analysis (MapReduce: map text+rating to sentiment, reduce to count)
+# Sentiment Analysis
+start_time = time.time()
 df_sentiment = df.withColumn("sentiment", sentiment_udf(col("overall"), col("cleaned_reviewText")))
+sentiment_time = time.time() - start_time
+print(f"Time for sentiment analysis: {sentiment_time:.2f} seconds")
 
 # Save sentiment results
+start_time = time.time()
 sentiment_output = "s3://electronics-reviews-bucket/results/sentiment/"
 df_sentiment.select("asin", "overall", "cleaned_reviewText", "sentiment", "reviewTime") \
     .write.mode("overwrite").parquet(sentiment_output)
+sentiment_write_time = time.time() - start_time
+print(f"Time to write sentiment results: {sentiment_write_time:.2f} seconds")
 
 # Compute and display sentiment distribution
+start_time = time.time()
 sentiment_dist = df_sentiment.groupBy("sentiment").count()
 sentiment_dist.show()
+sentiment_dist_time = time.time() - start_time
+print(f"Time for sentiment distribution: {sentiment_dist_time:.2f} seconds")
 
-# Word Count (MapReduce: map to words, reduce to frequencies per year)
-# Extract year from reviewTime
-df = df.withColumn("year", year(to_date(col("reviewTime"), "MM dd, yyyy")))
+# Compute metrics
+throughput = total_records / sentiment_time if sentiment_time > 0 else 0
+latency_per_record = (sentiment_time / total_records) * 1000  # ms per record
+total_execution_time = read_time + sentiment_time + sentiment_write_time + sentiment_dist_time
 
-# Map: Tokenize reviewText
-tokenizer = Tokenizer(inputCol="cleaned_reviewText", outputCol="words")
-df = tokenizer.transform(df)
+metrics = {
+    "total_records": total_records,
+    "read_time_seconds": read_time,
+    "sentiment_time_seconds": sentiment_time,
+    "sentiment_write_time_seconds": sentiment_write_time,
+    "sentiment_dist_time_seconds": sentiment_dist_time,
+    "total_execution_time_seconds": total_execution_time,
+    "throughput_records_per_second": throughput,
+    "latency_per_record_ms": latency_per_record
+}
 
-# Map: Remove stop words
-remover = StopWordsRemover(inputCol="words", outputCol="filtered_words")
-df = remover.transform(df)
+# Save metrics to local JSON and upload to S3
+metrics_file = "/tmp/sentiment_metrics.json"
+with open(metrics_file, "w") as f:
+    json.dump(metrics, f, indent=4)
 
-# Map: Explode words to rows
-df_words = df.select("year", explode(col("filtered_words")).alias("word")) \
-    .filter(col("word") != "")
+s3_bucket = "electronics-reviews-bucket"
+s3_key = "results/metrics/sentiment_metrics/sentiment_metrics.json"
 
-# Reduce: Compute word frequencies per year
-word_freq = df_words.groupBy("year", "word").count()
+s3 = boto3.client("s3")
+s3.upload_file(metrics_file, s3_bucket, s3_key)
+print(f"Metrics JSON uploaded to s3://{s3_bucket}/{s3_key}")
 
-# Get top 5 words per year
-top_words = word_freq.orderBy("year", col("count").desc()) \
-    .groupBy("year") \
-    .agg(collect_list(struct("word", "count")).alias("top_words")) \
-    .select("year", expr("slice(top_words, 1, 5)").alias("top_5_words"))
+# Print metrics
+print("Metrics:")
+print(f" Total Records: {total_records}")
+print(f" Throughput: {throughput:.2f} records/second")
+print(f" Latency per Record: {latency_per_record:.4f} ms")
+print(f" Total Execution Time: {total_execution_time:.2f} seconds")
 
-# Save word count results
-wordcount_output = "s3://electronics-reviews-bucket/results/wordcount/"
-top_words.write.mode("overwrite").parquet(wordcount_output)
-
-# Show sample word count results
-top_words.show(10, truncate=50)
-
-# Stop Spark session
 spark.stop()
-            </pre>
-            <p><strong>Notes:</strong> Sentiment analysis is functional. Word count has errors; focus on fixing it for MapReduce. Choose sentiment analysis over hashtag trends for this dataset.</p>
-        </div>
+                </code></pre>
+            </section>
 
-        <div class="section">
-            <h2>Additional Resources</h2>
-            <p>Check my Grok chat for more details: <a href="https://grok.com/share/bGVnYWN5_f4d01b0f-5f44-4c81-8d04-d3e4f6055358" target="_blank">Grok Chat Link</a></p>
-        </div>
+            <section class="bg-white rounded-lg shadow-md p-6" aria-labelledby="resources">
+                <h2 id="resources" class="text-2xl font-semibold text-gray-700 mb-4">Additional Resources</h2>
+                <p class="text-gray-600">For more details, refer to the project documentation or contact the author.</p>
+            </section>
+        </main>
+
+        <footer class="text-center mt-8 py-4 bg-gray-800 text-white rounded-lg">
+            <p>© 2025 Shwe Moe Thant, National College of Ireland</p>
+        </footer>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
