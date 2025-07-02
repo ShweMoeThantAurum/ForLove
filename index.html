@@ -30,9 +30,33 @@
                 <p class="mb-4 text-gray-600">Create a cluster on EMR with 2 cores. Use the following bootstrap script:</p>
                 <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto"><code class="language-bash">
 #!/bin/bash
-sudo pip3 install textblob numpy nltk
+
+# Exit on any error
+set -e
+
+# Update system packages
+echo "Updating system packages..."
+sudo yum update -y
+
+# Install Python dependencies
+echo "Installing Python dependencies..."
+sudo pip3 install boto3 pandas plotly kaleido vaderSentiment numpy nltk
+
+# Install NLTK data (if needed for other scripts like data_ingestion.py)
+echo "Installing NLTK data..."
 sudo python3 -c "import nltk; nltk.download('punkt', download_dir='/usr/local/lib/python3.8/dist-packages/nltk_data'); nltk.download('averaged_perceptron_tagger', download_dir='/usr/local/lib/python3.8/dist-packages/nltk_data')"
-                </code></pre>
+
+# Install Google Chrome for Kaleido (Plotly image rendering)
+echo "Installing Google Chrome..."
+sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+sudo yum install -y ./google-chrome-stable_current_x86_64.rpm
+sudo rm -f google-chrome-stable_current_x86_64.rpm
+
+# Verify installations
+echo "Verifying Python package installations..."
+pip3 show boto3 pandas plotly kaleido vaderSentiment numpy nltk
+
+echo "Bootstrap script completed successfully."                </code></pre>
                 <p class="mt-4 text-gray-600">Write the script on your local machine via Visual Studio Code, save it, upload to S3, and use it as the bootstrap file when creating the cluster.</p>
 
                 <h3 class="text-xl font-medium text-gray-600 mb-2">EMR Processing Script</h3>
