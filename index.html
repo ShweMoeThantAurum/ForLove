@@ -127,6 +127,18 @@ exit 0
                 <div class="code-block">
                     <pre><code class="language-python">
 import logging
+major_version = spark.version.split('.')[0]
+if major_version == '3':
+    from pyspark.sql import SparkSession
+    from pyspark.sql.functions import col, lower, spark_partition_id
+    from pyspark.sql.types import StructType, StructField, StringType
+else:
+    from pyspark.sql import SQLContext
+    from pyspark.sql.functions import col, lower, spark_partition_id
+    from pyspark.sql.types import StructType, StructField, StringType
+    sc = SparkContext.getOrCreate()
+    spark = SQLContext(sc)
+import logging
 import boto3
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, lower, spark_partition_id
@@ -221,6 +233,56 @@ if __name__ == "__main__":
 <Code Here>
                     </code></pre>
                 </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="phase2-stream">
+                <h2 id="phase2-stream"
+                    class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
+                    Phase 2: Stream Processing</h2>
+                <p class="text-lg text-gray-600 mb-6 leading-relaxed">After completing the initial data processing, the
+                    dataset was stored in Parquet format. However, streaming Parquet files directly using Kinesis and
+                    PySpark proved challenging due to numerous errors related to Java dependencies and compatibility
+                    issues. To overcome this, the Parquet files were converted to JSON format first.</p>
+
+                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Convert Parquet to JSON</h3>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">A t3.medium EC2 instance was launched to execute
+                    the following script (<a class="highlight-link"
+                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/convert_parquet_to_json.py">convert_parquet_to_json.py</a>)
+                    to convert the processed Parquet files into JSON and save them to an S3 bucket:</p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+<Code Here>
+                    </code></pre>
+                </div>
+
+                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Send JSON to Kinesis</h3>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">An Amazon Kinesis Data Stream was created.
+                    <strong>⚠️ Ensure file names and file paths in the code are correct before proceeding.</strong> The
+                    following script (<a class="highlight-link"
+                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/send_json_to_kinesis.py">send_json_to_kinesis.py</a>)
+                    was saved on the EC2 instance and used to send the JSON data to Kinesis:
+                </p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+<Code Here>
+                    </code></pre>
+                </div>
+
+                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Stream Processing</h3>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">The following script (<a class="highlight-link"
+                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/stream_processing.py">stream_processing.py</a>)
+                    was used for real-time stream processing. To run the process smoothly, two separate terminal
+                    sessions were opened on the EC2 instance via SSH. In one terminal,
+                    <code>send_json_to_kinesis.py</code> was executed to send the data. In the other terminal,
+                    <code>stream_processing.py</code> was run to process the stream in real time:
+                </p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+<Code Here>
+                    </code></pre>
+                </div>
+                <p class="text-lg text-gray-600 mt-4 leading-relaxed">With these steps completed, the stream processing
+                    phase was successfully executed.</p>
             </section>
 
             <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="resources">
