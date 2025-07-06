@@ -127,18 +127,6 @@ exit 0
                 <div class="code-block">
                     <pre><code class="language-python">
 import logging
-major_version = spark.version.split('.')[0]
-if major_version == '3':
-    from pyspark.sql import SparkSession
-    from pyspark.sql.functions import col, lower, spark_partition_id
-    from pyspark.sql.types import StructType, StructField, StringType
-else:
-    from pyspark.sql import SQLContext
-    from pyspark.sql.functions import col, lower, spark_partition_id
-    from pyspark.sql.types import StructType, StructField, StringType
-    sc = SparkContext.getOrCreate()
-    spark = SQLContext(sc)
-import logging
 import boto3
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, lower, spark_partition_id
@@ -236,53 +224,89 @@ if __name__ == "__main__":
             </section>
 
             <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="phase2-stream">
-                <h2 id="phase2-stream"
-                    class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
+                <h2 id="phase2-stream" class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
                     Phase 2: Stream Processing</h2>
-                <p class="text-lg text-gray-600 mb-6 leading-relaxed">After completing the initial data processing, the
-                    dataset was stored in Parquet format. However, streaming Parquet files directly using Kinesis and
-                    PySpark proved challenging due to numerous errors related to Java dependencies and compatibility
-                    issues. To overcome this, the Parquet files were converted to JSON format first.</p>
-
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">After processing the dataset, the output was in Parquet format. Streaming Parquet files using Kinesis with PySpark was challenging due to Java dependency issues, so the data was converted to JSON first.</p>
                 <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Convert Parquet to JSON</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">A t3.medium EC2 instance was launched to execute
-                    the following script (<a class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/convert_parquet_to_json.py">convert_parquet_to_json.py</a>)
-                    to convert the processed Parquet files into JSON and save them to an S3 bucket:</p>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Launch a t3.medium EC2 instance and run the following script (<a class="highlight-link" href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/convert_parquet_to_json.py">convert_parquet_to_json.py</a>) to convert Parquet files to JSON, saving the output to S3:</p>
                 <div class="code-block">
                     <pre><code class="language-python">
 <Code Here>
                     </code></pre>
                 </div>
+                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Stream Data to Kinesis</h3>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Create a Kinesis stream, ensuring correct file names and paths. Upload and run the following script (<a class="highlight-link" href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/send_json_to_kinesis.py">send_json_to_kinesis.py</a>) to push JSON data to the Kinesis stream:</p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+<Code Here>
+                    </code></pre>
+                </div>
+                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Process the Kinesis Stream</h3>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Upload the following script (<a class="highlight-link" href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/stream_processing.py">stream_processing.py</a>) to the EC2 instance to process the incoming stream in real-time:</p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+<Code Here>
+                    </code></pre>
+                </div>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">To execute, SSH into the EC2 instance with two terminal sessions. In the first, run <code>send_json_to_kinesis.py</code>. In the second, run <code>stream_processing.py</code>.</p>
+                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Configure AWS CLI</h3>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Before running the scripts, configure AWS CLI credentials by running:</p>
+                <div class="code-block">
+                    <pre><code class="language-bash">
+aws configure
+                    </code></pre>
+                </div>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Provide the following:</p>
+                <ul class="list-disc pl-6 text-lg text-gray-600 mb-4 leading-relaxed">
+                    <li>AWS_ACCESS_KEY_ID: Paste from your current learner lab session</li>
+                    <li>AWS_SECRET_ACCESS_KEY: Paste from the same session</li>
+                    <li>AWS_DEFAULT_REGION: Type <code>us-east-1</code></li>
+                    <li>AWS_DEFAULT_FORMAT: Press Enter</li>
+                </ul>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Add the session token by editing the credentials file:</p>
+                <div class="code-block">
+                    <pre><code class="language-bash">
+nano ~/.aws/credentials
+                    </code></pre>
+                </div>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Append the following line at the bottom, replacing with your session token:</p>
+                <div class="code-block">
+                    <pre><code class="language-bash">
+AWS_SESSION_TOKEN=<your_current_AWS_SESSION_TOKEN>
+                    </code></pre>
+                </div>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Stream processing is now complete ✅</p>
+            </section>
 
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Send JSON to Kinesis</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">An Amazon Kinesis Data Stream was created.
-                    <strong>⚠️ Ensure file names and file paths in the code are correct before proceeding.</strong> The
-                    following script (<a class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/send_json_to_kinesis.py">send_json_to_kinesis.py</a>)
-                    was saved on the EC2 instance and used to send the JSON data to Kinesis:
-                </p>
+            <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="phase2-hybrid">
+                <h2 id="phase2-hybrid" class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
+                    Phase 2: Hybrid Parallelism</h2>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Create an EMR cluster as done for MapReduce in Phase 2, attaching the bootstrap file from your S3 bucket.</p>
+                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Install Dependencies</h3>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Install <code>psutil</code> on the EMR cluster:</p>
+                <div class="code-block">
+                    <pre><code class="language-bash">
+pip install --user psutil
+                    </code></pre>
+                </div>
+                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Configure AWS Credentials</h3>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Set up AWS credentials by exporting the following environment variables, replacing with your learner lab credentials:</p>
+                <div class="code-block">
+                    <pre><code class="language-bash">
+export AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID>
+export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
+export AWS_SESSION_TOKEN=<AWS_SESSION_TOKEN>
+export AWS_DEFAULT_REGION=us-east-1
+                    </code></pre>
+                </div>
+                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Run Hybrid Parallelism Script</h3>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Upload and run the following script (<a class="highlight-link" href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/hybrid_parallelism.py">hybrid_parallelism.py</a>) on the EMR cluster:</p>
                 <div class="code-block">
                     <pre><code class="language-python">
 <Code Here>
                     </code></pre>
                 </div>
-
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Stream Processing</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">The following script (<a class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/stream_processing.py">stream_processing.py</a>)
-                    was used for real-time stream processing. To run the process smoothly, two separate terminal
-                    sessions were opened on the EC2 instance via SSH. In one terminal,
-                    <code>send_json_to_kinesis.py</code> was executed to send the data. In the other terminal,
-                    <code>stream_processing.py</code> was run to process the stream in real time:
-                </p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-<Code Here>
-                    </code></pre>
-                </div>
-                <p class="text-lg text-gray-600 mt-4 leading-relaxed">With these steps completed, the stream processing
-                    phase was successfully executed.</p>
+                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Hybrid Parallelism is now complete ✅</p>
             </section>
 
             <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="resources">
