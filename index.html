@@ -4,346 +4,389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guide: Processing Electronics Dataset</title>
+    <title>Just for You, Love 🩷</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        .code-block {
-            background-color: #f6f8fa;
-            border-radius: 8px;
-            overflow-x: auto;
+        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@500;700&family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffe6e6, #fff0f5);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
         }
 
-        .code-block pre {
-            padding: 1.5rem;
-            margin: 0;
+        .container {
+            max-width: 700px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f8bbd0;
+            text-align: center;
         }
 
-        .section-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .title {
+            font-family: 'Lora', serif;
+            font-size: 2.8em;
+            color: #d81b60;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
 
-        .section-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .highlight-link {
-            color: #3b82f6;
-            text-decoration: underline;
+        .section-title {
+            font-family: 'Lora', serif;
+            font-size: 1.8em;
+            color: #c2185b;
+            margin: 30px 0 15px;
             font-weight: 500;
-            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .highlight-link:hover {
-            color: #1d4ed8;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            background: #fff0f5;
+            border: 1px solid #f8bbd0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #f8bbd0;
+            color: #4a2c2a;
+            font-size: 1.1em;
+        }
+
+        th {
+            background: #f8bbd0;
+            color: #ad1457;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+
+        tr:nth-child(even) {
+            background: #fef7fa;
+        }
+
+        tr:hover {
+            background: #fce4ec;
+            transition: background 0.3s ease;
+        }
+
+        .reminder {
+            background: #fff;
+            border: 3px solid #f8bbd0;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.7s ease-out;
+        }
+
+        .reminder-content {
+            font-size: 1.2em;
+            color: #4a2c2a;
+        }
+
+        .reminder-amount {
+            font-family: 'Lora', serif;
+            font-size: 2.5em;
+            color: #e91e63;
+            margin: 15px 0;
+            font-weight: 700;
+        }
+
+        .reminder-note {
+            font-size: 1.1em;
+            color: #6d4c41;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .card {
+            border-radius: 12px;
+            padding: 20px;
+            background: #fffafc;
+            border: 1px solid #f8bbd0;
+            margin-bottom: 30px;
+            animation: slideIn 0.7s ease-out;
+        }
+
+        .highlight {
+            font-weight: 600;
+            color: #e91e63;
+            font-size: 1.2em;
+        }
+
+        .icon {
+            color: #e91e63;
+            font-size: 1.5em;
+        }
+
+        .divider {
+            border-top: 2px solid #f8bbd0;
+            margin: 20px 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 
-<body class="bg-gradient-to-br from-gray-100 to-gray-200 font-sans text-gray-800 antialiased min-h-screen">
-    <div class="container mx-auto px-4 py-12 max-w-5xl">
-        <header class="text-center mb-12">
-            <h1 class="text-5xl font-extrabold text-gray-900 mb-4 drop-shadow-md">Guide: Processing Electronics Dataset
-            </h1>
-            <p class="text-xl text-gray-700">Scalable Cloud-Based Sentiment Analysis for Amazon Electronics Reviews</p>
-        </header>
+<body>
+    <div class="container">
+        <!-- Title -->
+        <h1 class="title"><i class="fas fa-heart icon"></i> Just for You, Love 🩷</h1>
 
-        <main class="space-y-8">
-            <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="phase1-data-prep">
-                <h2 id="phase1-data-prep"
-                    class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">Phase 1: Data
-                    Preparation</h2>
-                <p class="text-lg text-gray-600 leading-relaxed">Upload the original dataset, Electronics.json (around
-                    11 GB) to S3.</p>
-            </section>
+        <!-- Reminder Section -->
+        <div class="reminder">
+            <div class="reminder-content">
+                <i class="fas fa-heart icon"></i>
+                <p class="reminder-amount">€250</p>
+                <p class="reminder-note">အခန်းခပေးရန် ကျန်။</p>
+            </div>
+        </div>
 
-            <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="phase1-emr">
-                <h2 id="phase1-emr" class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
-                    Phase 1: AWS EMR Setup and Processing</h2>
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Create EMR Cluster</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Create a cluster on EMR with 2 cores. Use the
-                    following bootstrap script:</p>
-                <div class="code-block">
-                    <pre><code class="language-bash">
-#!/bin/bash
-                    
-# Exit on any error
-set -e
-                    
-# Log file for debugging
-LOG_FILE="/tmp/bootstrap.log"
-echo "Starting bootstrap script..." | tee -a $LOG_FILE
-                    
-# Update system packages
-echo "Updating system packages..." | tee -a $LOG_FILE
-sudo yum update -y >> $LOG_FILE 2>&1
-                    
-# Check Python version
-PYTHON_VERSION=$(python3 --version | cut -d' ' -f2 | cut -d'.' -f1,2)
-NLTK_DATA_PATH="/usr/local/lib/python${PYTHON_VERSION}/dist-packages/nltk_data"
-echo "Detected Python version: $PYTHON_VERSION" | tee -a $LOG_FILE
-echo "NLTK data path: $NLTK_DATA_PATH" | tee -a $LOG_FILE
-                    
-# Install Python dependencies
-echo "Installing Python dependencies..." | tee -a $LOG_FILE
-sudo pip3 install boto3 pandas plotly kaleido textblob numpy nltk >> $LOG_FILE 2>&1
-                    
-# Install NLTK data for TextBlob
-echo "Installing NLTK data..." | tee -a $LOG_FILE
-sudo mkdir -p $NLTK_DATA_PATH
-sudo python3 -c "import nltk; nltk.download('punkt', download_dir='$NLTK_DATA_PATH');
-nltk.download('averaged_perceptron_tagger', download_dir='$NLTK_DATA_PATH'); nltk.download('brown',
-download_dir='$NLTK_DATA_PATH')" >> $LOG_FILE 2>&1
-                    
-# Install Google Chrome for Kaleido (Plotly image rendering)
-echo "Installing Google Chrome..." | tee -a $LOG_FILE
-sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm >> $LOG_FILE 2>&1
-sudo yum install -y ./google-chrome-stable_current_x86_64.rpm >> $LOG_FILE 2>&1
-sudo rm -f google-chrome-stable_current_x86_64.rpm >> $LOG_FILE 2>&1
-                    
-# Verify installations
-echo "Verifying Python package installations..." | tee -a $LOG_FILE
-pip3 show boto3 pandas plotly kaleido textblob numpy nltk >> $LOG_FILE 2>&1
-                    
-# Check NLTK data
-echo "Verifying NLTK data..." | tee -a $LOG_FILE
-ls -l $NLTK_DATA_PATH >> $LOG_FILE 2>&1
-                    
-echo "Bootstrap script completed successfully." | tee -a $LOG_FILE
-exit 0
-                    </code></pre>
-                </div>
-                <p class="mt-6 text-lg text-gray-600 leading-relaxed">Write the script on your local machine via Visual
-                    Studio Code, save it, upload to S3, and use it as the bootstrap file when creating the cluster.</p>
+        <div class="divider"></div>
 
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">EMR Processing Script</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Run the following PySpark script (<a
-                        class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/data_ingestion.py">data_ingestion.py</a>)
-                    on the EMR cluster:</p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-import logging
-import boto3
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, lower, spark_partition_id
-from pyspark.sql.types import StructType, StructField, StringType
+        <!-- Saturday -->
+        <div class="card">
+            <div class="section-title"><i class="fas fa-utensils icon"></i> Saturday</div>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Cost (€)</th>
+                </tr>
+                <tr>
+                    <td>Han Sung Restaurant</td>
+                    <td>22.60</td>
+                </tr>
+                <tr>
+                    <td>Hotpot</td>
+                    <td>66.00</td>
+                </tr>
+                <tr>
+                    <td>O’Connell’s Bar</td>
+                    <td>22.45</td>
+                </tr>
+                <tr>
+                    <td>Starbucks</td>
+                    <td>14.30</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Subtotal</td>
+                    <td class="highlight">125.35</td>
+                </tr>
+            </table>
+        </div>
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+        <!-- Monday -->
+        <div class="card">
+            <div class="section-title"><i class="fas fa-coffee icon"></i> Monday</div>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Cost (€)</th>
+                </tr>
+                <tr>
+                    <td>Boca</td>
+                    <td>21.00</td>
+                </tr>
+                <tr>
+                    <td>မာလာထန်</td>
+                    <td>17.36</td>
+                </tr>
+                <tr>
+                    <td>The Art</td>
+                    <td>8.90</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Subtotal</td>
+                    <td class="highlight">47.26</td>
+                </tr>
+            </table>
+        </div>
 
-INPUT_PATH = "s3://electronics-reviews-bucket/Electronics.json"
-OUTPUT_PATH = "s3://electronics-reviews-bucket/processed_text_data_original/"
-BUCKET_NAME = "electronics-reviews-bucket"
-OUTPUT_PREFIX = "processed_text_data_original/"
+        <!-- Saturday (again) -->
+        <div class="card">
+            <div class="section-title"><i class="fas fa-utensils icon"></i> Saturday (again)</div>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Cost (€)</th>
+                </tr>
+                <tr>
+                    <td>မာလာတန်</td>
+                    <td>30.64</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Subtotal</td>
+                    <td class="highlight">30.64</td>
+                </tr>
+            </table>
+        </div>
 
-def main():
-    spark = SparkSession.builder.appName("ElectronicsTextDataIngestion").getOrCreate()
-    schema = StructType([StructField("reviewText", StringType(), True)])
-    try:
-        df_text = spark.read.option("multiLine", False).schema(schema).json(INPUT_PATH) \
-            .filter(col("reviewText").isNotNull()) \
-            .select(lower(col("reviewText")).alias("cleaned_reviewText"))
-        df_text.write.mode("overwrite").parquet(OUTPUT_PATH)
-        record_count = df_text.count()
-        partition_count = df_text.select(spark_partition_id()).distinct().count()
-        logger.info(f"Total records ingested: {record_count}")
-        logger.info(f"Number of partitions: {partition_count}")
-        s3_client = boto3.client('s3')
-        response = s3_client.list_objects_v2(Bucket=BUCKET_NAME, Prefix=OUTPUT_PREFIX)
-        total_size_bytes = sum(obj['Size'] for obj in response.get('Contents', []))
-        total_size_gb = total_size_bytes / (1024 ** 3)
-        logger.info(f"Total output file size: {total_size_gb:.2f} GB")
-    except Exception as e:
-        logger.error(f"Error during data ingestion: {e}")
-    finally:
-        spark.stop()
+        <!-- Salomon -->
+        <div class="card">
+            <div class="section-title"><i class="fas fa-shoe-prints icon"></i> Salomon</div>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Cost (€)</th>
+                </tr>
+                <tr>
+                    <td>Sneaker Fee</td>
+                    <td>435.11</td>
+                </tr>
+                <tr>
+                    <td>Delivery Fee</td>
+                    <td>89.18</td>
+                </tr>
+                <tr>
+                    <td>Tax</td>
+                    <td>258.29</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Subtotal</td>
+                    <td class="highlight">782.58</td>
+                </tr>
+            </table>
+        </div>
 
-if __name__ == "__main__":
-    main()
-                    </code></pre>
-                </div>
-            </section>
+        <!-- Others -->
+        <div class="card">
+            <div class="section-title"><i class="fas fa-shopping-basket icon"></i> Others</div>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Cost (€)</th>
+                </tr>
+                <tr>
+                    <td>ဝက်ဂုတ်သား</td>
+                    <td>18.00</td>
+                </tr>
+                <tr>
+                    <td>ဘူးခွံ</td>
+                    <td>13.00</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Subtotal</td>
+                    <td class="highlight">31.00</td>
+                </tr>
+            </table>
+        </div>
 
-            <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="phase2">
-                <h2 id="phase2" class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
-                    Phase 2: MapReduce Implementation</h2>
-                <p class="text-lg text-gray-600 mb-6 leading-relaxed">Add the following files to the project:</p>
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">20percent.py</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Run this script (<a class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/20percent.py">20percent.py</a>)
-                    for 20% data processing:</p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-<Code Here>
-                    </code></pre>
-                </div>
+        <!-- Monday (Howth) -->
+        <div class="card">
+            <div class="section-title"><i class="fas fa-fish icon"></i> Monday (Howth)</div>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Cost (€)</th>
+                </tr>
+                <tr>
+                    <td>Fish and Chips</td>
+                    <td>14.90</td>
+                </tr>
+                <tr>
+                    <td>Buffet</td>
+                    <td>66.00</td>
+                </tr>
+                <tr>
+                    <td>The Art</td>
+                    <td>4.70</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Subtotal</td>
+                    <td class="highlight">85.60</td>
+                </tr>
+            </table>
+        </div>
 
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">40percent.py</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Run this script (<a class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/40percent.py">40percent.py</a>)
-                    for 40% data processing:</p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-<Code Here>
-                    </code></pre>
-                </div>
+        <!-- Movies (Superman) -->
+        <div class="card">
+            <div class="section-title"><i class="fas fa-film icon"></i> Movies (Superman)</div>
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Cost (€)</th>
+                </tr>
+                <tr>
+                    <td>Superman</td>
+                    <td>31.00</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Subtotal</td>
+                    <td class="highlight">31.00</td>
+                </tr>
+            </table>
+        </div>
 
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">60percent.py</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Run this script (<a class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/60percent.py">60percent.py</a>)
-                    for 60% data processing:</p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-<Code Here>
-                    </code></pre>
-                </div>
-
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">80percent.py</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Run this script (<a class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/80percent.py">80percent.py</a>)
-                    for 80% data processing:</p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-<Code Here>
-                    </code></pre>
-                </div>
-
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">100percent.py</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Run this script (<a class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/100percent.py">100percent.py</a>)
-                    for 100% data processing:</p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-<Code Here>
-                    </code></pre>
-                </div>
-            </section>
-
-            <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="phase2-stream">
-                <h2 id="phase2-stream"
-                    class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
-                    Phase 2: Stream Processing</h2>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">After processing the dataset, the output was in
-                    Parquet format. Streaming Parquet files using Kinesis with PySpark was challenging due to Java
-                    dependency issues, so the data was converted to JSON first.</p>
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Convert Parquet to JSON</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Launch a t3.medium EC2 instance and run the
-                    following script (<a class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/convert_parquet_to_json.py">convert_parquet_to_json.py</a>)
-                    to convert Parquet files to JSON, saving the output to S3:</p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-<Code Here>
-                    </code></pre>
-                </div>
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Stream Data to Kinesis</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Create a Kinesis stream, ensuring correct file
-                    names and paths. Upload and run the following script (<a class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/send_json_to_kinesis.py">send_json_to_kinesis.py</a>)
-                    to push JSON data to the Kinesis stream:</p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-<Code Here>
-                    </code></pre>
-                </div>
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Process the Kinesis Stream</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Upload the following script (<a
-                        class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/stream_processing.py">stream_processing.py</a>)
-                    to the EC2 instance to process the incoming stream in real-time:</p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-<Code Here>
-                    </code></pre>
-                </div>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">To execute, SSH into the EC2 instance with two
-                    terminal sessions. In the first, run <code>send_json_to_kinesis.py</code>. In the second, run
-                    <code>stream_processing.py</code>.
-                </p>
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Configure AWS CLI</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Before running the scripts, configure AWS CLI
-                    credentials by running:</p>
-                <div class="code-block">
-                    <pre><code class="language-bash">
-aws configure
-                    </code></pre>
-                </div>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Provide the following:</p>
-                <ul class="list-disc pl-6 text-lg text-gray-600 mb-4 leading-relaxed">
-                    <li>AWS_ACCESS_KEY_ID: Paste from your current learner lab session</li>
-                    <li>AWS_SECRET_ACCESS_KEY: Paste from the same session</li>
-                    <li>AWS_DEFAULT_REGION: Type <code>us-east-1</code></li>
-                    <li>AWS_DEFAULT_FORMAT: Press Enter</li>
-                </ul>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Add the session token by editing the credentials
-                    file:</p>
-                <div class="code-block">
-                    <pre><code class="language-bash">
-nano ~/.aws/credentials
-                    </code></pre>
-                </div>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Append the following line at the bottom, replacing
-                    with your session token:</p>
-                <div class="code-block">
-                    <pre><code class="language-bash">
-AWS_SESSION_TOKEN=<your_current_AWS_SESSION_TOKEN>
-                    </code></pre>
-                </div>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Stream processing is now complete ✅</p>
-            </section>
-
-            <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="phase2-hybrid">
-                <h2 id="phase2-hybrid"
-                    class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
-                    Phase 2: Hybrid Parallelism</h2>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Create an EMR cluster as done for MapReduce in
-                    Phase 2, attaching the bootstrap file from your S3 bucket.</p>
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Install Dependencies</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Install <code>psutil</code> on the EMR cluster:
-                </p>
-                <div class="code-block">
-                    <pre><code class="language-bash">
-pip install --user psutil
-                    </code></pre>
-                </div>
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Configure AWS Credentials</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Set up AWS credentials by exporting the following
-                    environment variables, replacing with your learner lab credentials:</p>
-                <div class="code-block">
-                    <pre><code class="language-bash">
-export AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID>
-export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
-export AWS_SESSION_TOKEN=<AWS_SESSION_TOKEN>
-export AWS_DEFAULT_REGION=us-east-1
-                    </code></pre>
-                </div>
-                <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6">Run Hybrid Parallelism Script</h3>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Upload and run the following script (<a
-                        class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/hybrid_parallelism.py">hybrid_parallelism.py</a>)
-                    on the EMR cluster:</p>
-                <div class="code-block">
-                    <pre><code class="language-python">
-<Code Here>
-                    </code></pre>
-                </div>
-                <p class="text-lg text-gray-600 mb-4 leading-relaxed">Hybrid Parallelism is now complete ✅</p>
-            </section>
-
-            <section class="bg-white rounded-xl shadow-lg p-8 section-card" aria-labelledby="resources">
-                <h2 id="resources" class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
-                    Additional Resources</h2>
-                <p class="text-lg text-gray-600 leading-relaxed">For more details, refer to the sample report (<a
-                        class="highlight-link"
-                        href="https://github.com/ShweMoeThantAurum/Scalable-Cloud-Programming-Project/blob/main/Scalable_Cloud_Computing_Report.pdf">Scalable_Cloud_Computing_Report.pdf</a>).
-                </p>
-            </section>
-        </main>
+        <!-- Total and Per Person -->
+        <div class="card">
+            <div class="section-title"><i class="fas fa-calculator icon"></i> Summary</div>
+            <table>
+                <tr>
+                    <td class="highlight">Total</td>
+                    <td class="highlight">1,133.43</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Each Pays</td>
+                    <td class="highlight">566.72</td>
+                </tr>
+            </table>
+        </div>
     </div>
+
+    <script>
+        // Smooth scroll for anchor links (if added later)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animate cards on scroll
+        const cards = document.querySelectorAll('.card, .reminder');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            observer.observe(card);
+        });
+    </script>
 </body>
 
 </html>
