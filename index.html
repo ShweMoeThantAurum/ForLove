@@ -16,44 +16,52 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 30px;
+            align-items: flex-start;
+            padding: 1.5rem;
         }
 
         .container {
             max-width: 700px;
+            width: 100%;
             background: #ffffff;
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 1.25rem;
+            padding: 2rem;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
             border: 2px solid #f8bbd0;
             text-align: center;
+            box-sizing: border-box;
         }
 
         .title {
             font-family: 'Lora', serif;
-            font-size: 2.8em;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
             color: #d81b60;
-            margin-bottom: 20px;
+            margin-bottom: 1.25rem;
             font-weight: 700;
         }
 
         .section-title {
             font-family: 'Lora', serif;
-            font-size: 1.8em;
+            font-size: clamp(1.2rem, 4vw, 1.6rem);
             color: #c2185b;
-            margin: 30px 0 15px;
+            margin: 1.5rem 0 0.75rem;
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 0.5rem;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
         }
 
         table {
             width: 100%;
+            min-width: 300px;
             border-collapse: collapse;
-            margin-bottom: 25px;
             background: #fff0f5;
             border: 1px solid #f8bbd0;
             border-radius: 10px;
@@ -62,18 +70,18 @@
 
         th,
         td {
-            padding: 16px;
+            padding: 0.8rem;
             text-align: left;
             border-bottom: 1px solid #f8bbd0;
             color: #4a2c2a;
-            font-size: 1.1em;
+            font-size: clamp(0.9rem, 3vw, 1rem);
         }
 
         th {
             background: #f8bbd0;
             color: #ad1457;
             font-weight: 600;
-            font-size: 1.2em;
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
         }
 
         tr:nth-child(even) {
@@ -88,64 +96,64 @@
         .reminder {
             background: #fff;
             border: 3px solid #f8bbd0;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
             animation: slideIn 0.7s ease-out;
         }
 
         .reminder-content {
-            font-size: 1.2em;
+            font-size: clamp(1rem, 3vw, 1.1rem);
             color: #4a2c2a;
         }
 
         .reminder-amount {
             font-family: 'Lora', serif;
-            font-size: 2.5em;
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
             color: #e91e63;
-            margin: 15px 0;
+            margin: 0.75rem 0;
             font-weight: 700;
         }
 
         .reminder-note {
-            font-size: 1.1em;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
             color: #6d4c41;
             font-style: italic;
-            margin-top: 10px;
+            margin-top: 0.5rem;
         }
 
         .card {
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 0.75rem;
+            padding: 1rem;
             background: #fffafc;
             border: 1px solid #f8bbd0;
-            margin-bottom: 30px;
+            margin-bottom: 1.5rem;
             animation: slideIn 0.7s ease-out;
         }
 
         .highlight {
             font-weight: 600;
             color: #e91e63;
-            font-size: 1.2em;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
         }
 
         .icon {
             color: #e91e63;
-            font-size: 1.5em;
+            font-size: clamp(1.2rem, 4vw, 1.4rem);
         }
 
         .divider {
             border-top: 2px solid #f8bbd0;
-            margin: 20px 0;
+            margin: 1rem 0;
         }
 
         .warning {
             background: #fff;
             border: 3px solid #e91e63;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 30px 0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1.5rem 0;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
             animation: slideIn 0.7s ease-out;
             text-align: center;
@@ -153,13 +161,13 @@
 
         .warning-content {
             font-family: 'Lora', serif;
-            font-size: 1.5em;
+            font-size: clamp(1.1rem, 3.5vw, 1.3rem);
             color: #e91e63;
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 0.5rem;
         }
 
         @keyframes slideIn {
@@ -171,6 +179,53 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1.25rem;
+                border-radius: 0.5rem;
+            }
+
+            .title {
+                font-size: clamp(1.5rem, 5vw, 2rem);
+            }
+
+            .section-title {
+                font-size: clamp(1rem, 4vw, 1.3rem);
+            }
+
+            th, td {
+                padding: 0.5rem;
+                font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            }
+
+            .reminder {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+
+            .reminder-amount {
+                font-size: clamp(1.5rem, 4.5vw, 1.8rem);
+            }
+
+            .card {
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .warning {
+                padding: 0.75rem;
+                margin: 1rem 0;
+            }
+
+            .warning-content {
+                font-size: clamp(0.9rem, 3vw, 1.1rem);
             }
         }
     </style>
@@ -195,93 +250,101 @@
         <!-- Saturday (12 July) -->
         <div class="card">
             <div class="section-title"><i class="fas fa-utensils icon"></i> Saturday (12 July)</div>
-            <table>
-                <tr>
-                    <th>Item</th>
-                    <th>Cost (€)</th>
-                </tr>
-                <tr>
-                    <td>McDonalds</td>
-                    <td>18.20</td>
-                </tr>
-                <tr>
-                    <td>Costa</td>
-                    <td>4.95</td>
-                </tr>
-                <tr>
-                    <td>Han Sung Restaurant</td>
-                    <td>25.40</td>
-                </tr>
-                <tr>
-                    <td class="highlight">Subtotal</td>
-                    <td class="highlight">48.55</td>
-                </tr>
-            </table>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Item</th>
+                        <th>Cost (€)</th>
+                    </tr>
+                    <tr>
+                        <td>McDonalds</td>
+                        <td>18.20</td>
+                    </tr>
+                    <tr>
+                        <td>Costa</td>
+                        <td>4.95</td>
+                    </tr>
+                    <tr>
+                        <td>Han Sung Restaurant</td>
+                        <td>25.40</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Subtotal</td>
+                        <td class="highlight">48.55</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <!-- Sunday (13 July) -->
         <div class="card">
             <div class="section-title"><i class="fas fa-utensils icon"></i> Sunday (13 July)</div>
-            <table>
-                <tr>
-                    <th>Item</th>
-                    <th>Cost (€)</th>
-                </tr>
-                <tr>
-                    <td>Full Moon</td>
-                    <td>47.70</td>
-                </tr>
-                <tr>
-                    <td>Nana’s Tea</td>
-                    <td>7.40</td>
-                </tr>
-                <tr>
-                    <td>Fish and Chips</td>
-                    <td>16.50</td>
-                </tr>
-                <tr>
-                    <td class="highlight">Subtotal</td>
-                    <td class="highlight">71.60</td>
-                </tr>
-            </table>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Item</th>
+                        <th>Cost (€)</th>
+                    </tr>
+                    <tr>
+                        <td>Full Moon</td>
+                        <td>47.70</td>
+                    </tr>
+                    <tr>
+                        <td>Nana’s Tea</td>
+                        <td>7.40</td>
+                    </tr>
+                    <tr>
+                        <td>Fish and Chips</td>
+                        <td>16.50</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Subtotal</td>
+                        <td class="highlight">71.60</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <!-- Monday (14 July) -->
         <div class="card">
             <div class="section-title"><i class="fas fa-utensils icon"></i> Monday (14 July)</div>
-            <table>
-                <tr>
-                    <th>Item</th>
-                    <th>Cost (€)</th>
-                </tr>
-                <tr>
-                    <td>Burger King</td>
-                    <td>23.95</td>
-                </tr>
-                <tr>
-                    <td>Malatang</td>
-                    <td>25.73</td>
-                </tr>
-                <tr>
-                    <td class="highlight">Subtotal</td>
-                    <td class="highlight">49.68</td>
-                </tr>
-            </table>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Item</th>
+                        <th>Cost (€)</th>
+                    </tr>
+                    <tr>
+                        <td>Burger King</td>
+                        <td>23.95</td>
+                    </tr>
+                    <tr>
+                        <td>Malatang</td>
+                        <td>25.73</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Subtotal</td>
+                        <td class="highlight">49.68</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <!-- Total and Per Person -->
         <div class="card">
             <div class="section-title"><i class="fas fa-calculator icon"></i> Summary</div>
-            <table>
-                <tr>
-                    <td class="highlight">Total</td>
-                    <td class="highlight">169.83</td>
-                </tr>
-                <tr>
-                    <td class="highlight">Each Pays</td>
-                    <td class="highlight">84.92</td>
-                </tr>
-            </table>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <td class="highlight">Total</td>
+                        <td class="highlight">169.83</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Each Pays</td>
+                        <td class="highlight">84.92</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <!-- Warning Section -->
