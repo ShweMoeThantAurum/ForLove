@@ -1,543 +1,672 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounting Exam Revision Study Site</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #1f2937;
+            --text-color: #f3f4f6;
+            --accent-color: #3b82f6;
+            --background-color: #111827;
+            --card-background: #1f2937;
+            --border-color: #374151;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #333;
-            color: #f4f4f4;
-            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            padding: 2rem 1rem;
             text-align: center;
+            color: white;
             animation: fadeIn 1s ease-in-out;
         }
 
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
         nav {
-            background-color: #111;
-            overflow: hidden;
+            background-color: var(--secondary-color);
             position: sticky;
             top: 0;
             z-index: 1000;
-            transition: background-color 0.3s;
+            padding: 1rem;
+            box-shadow: var(--shadow);
         }
 
-        @media (max-width: 768px) {
-            nav {
-                position: relative;
-            }
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            text-align: center;
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            gap: 1rem;
         }
 
-        nav ul li {
-            display: inline;
-            margin: 0;
-        }
-
-        nav ul li a {
-            color: white;
+        .nav-menu li a {
+            color: var(--text-color);
             text-decoration: none;
-            padding: 14px 20px;
-            display: inline-block;
-            transition: background-color 0.3s, transform 0.3s;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
-        nav ul li a:hover {
-            background-color: #111;
-            transform: scale(1.05);
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            width: 100%;
         }
 
         section {
-            padding: 20px;
-            margin: 40px auto;
-            max-width: 1200px;
-            background-color: #444;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, transform 0.3s;
-            border: 1px solid #555;
+            background-color: var(--card-background);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         section:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
 
-        h1,
-        h2,
-        h3,
-        h4 {
-            color: #4da6ff;
-            transition: color 0.3s;
+        h2, h3, h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1.5rem 0;
+            background-color: var(--card-background);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        table,
-        th,
-        td {
-            border: 1px solid #aaa;
-            padding: 8px;
-            transition: background-color 0.3s;
+        th, td {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
         }
 
         th {
-            background-color: #555;
-            text-align: left;
+            background-color: var(--secondary-color);
+            font-weight: 600;
         }
 
         td {
-            background-color: #666;
+            background-color: var(--card-background);
         }
 
-        ul,
-        ol {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        footer {
-            background-color: #111;
-            color: #ddd;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* Collapsible sections */
         .collapsible {
-            background-color: #007bff;
+            background-color: var(--accent-color);
             color: white;
             cursor: pointer;
-            padding: 18px;
+            padding: 1rem;
             width: 100%;
             border: none;
             text-align: left;
-            outline: none;
-            font-size: 18px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.3s ease;
         }
 
         .collapsible:hover {
-            background-color: #0056b3;
+            background-color: #2563eb;
+        }
+
+        .collapsible[aria-expanded="true"]::after {
+            content: '▲';
+            float: right;
+        }
+
+        .collapsible[aria-expanded="false"]::after {
+            content: '▼';
+            float: right;
         }
 
         .content {
-            padding: 0 18px;
+            padding: 1.5rem;
+            background-color: var(--card-background);
+            border-radius: 0 0 8px 8px;
             display: none;
-            overflow: hidden;
-            background-color: #555;
-            border-radius: 0 0 5px 5px;
-            transition: background-color 0.3s;
         }
 
         .content.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
+        ul, ol {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            text-align: center;
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
             }
 
-            to {
-                opacity: 1;
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: var(--secondary-color);
+                padding: 1rem;
             }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu li {
+                width: 100%;
+            }
+
+            .nav-menu li a {
+                width: 100%;
+                text-align: center;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
-
 <body>
     <header>
         <h1>Accounting Exam Revision Study Site</h1>
-        <p>Structured content for effective studying. Access anywhere via your browser.</p>
+        <p>Your comprehensive resource for mastering accounting concepts and acing your exams.</p>
     </header>
     <nav>
-        <ul>
-            <li><a href="#part1">Part 1: Bookkeeping 1-3</a></li>
-            <li><a href="#part2">Part 2: Finance Department & Reporting</a></li>
-            <li><a href="#part3">Part 3: Cash Flow, Budgeting, Motivation</a></li>
-            <li><a href="#part4">Part 4: Operating Cash Cycle & Working Capital</a></li>
-            <li><a href="#part5">Part 5: Operating Cash Cycle & Working Capital (Repeated)</a></li>
-            <li><a href="#part6">Part 6: Financial Ratio Analysis</a></li>
-            <li><a href="#part7">Part 7: Sources of Capital & Financing</a></li>
-            <li><a href="#exam-paper">Exam Paper & Answers</a></li>
-        </ul>
+        <div class="nav-container">
+            <button class="hamburger" aria-label="Toggle navigation">☰</button>
+            <ul class="nav-menu">
+<!--                 <li><a href="#part1">Bookkeeping 1-3</a></li>
+                <li><a href="#part2">Finance & Reporting</a></li>
+                <li><a href="#part3">Cash Flow & Budgeting</a></li>
+                <li><a href="#part4">Operating Cash Cycle</a></li>
+                <li><a href="#part5">Working Capital</a></li>
+                <li><a href="#part6">Financial Ratios</a></li>
+                <li><a href="#part7">Capital & Financing</a></li> -->
+                <li><a href="#exam-paper">Exam Paper & Answers</a></li>
+            </ul>
+        </div>
     </nav>
-    <section id="exam-paper">
-        <h2>Exam Paper and Its Answers</h2>
-
-        <button class="collapsible">Exam Paper Analysis</button>
-        <div class="content">
-            <ul>
-                <li><strong>Structure</strong>: Choose 3 of 5 questions, each worth 100 marks, to be answered in
-                    English.
-                    The exam tests both <strong> theory</strong> (e.g., explaining concepts) and
-                    <strong>numerical</strong>
-                    skills (e.g., calculations, financial statements).
-                </li>
-                <li><strong>Question Breakdown</strong>:
+    <main>
+        <section id="exam-paper">
+            <h2>Exam Paper and Answers</h2>
+            <article>
+                <button class="collapsible" aria-expanded="false" aria-controls="exam-analysis">Exam Paper Analysis</button>
+                <div class="content" id="exam-analysis">
+                    <h3>Overview</h3>
                     <ul>
-                        <li><strong>Question 1</strong>: Working capital ( theory and numerical, Part 4).
-                            - (a) List working capital components (20 marks).
-                            - (b) Explain working capital’s role in sustainability (20 marks).
-                            - (c) Calculate operating cash cycle (OCC) and suggest improvements for Richmond Retail Ltd.
-                            (60
-                            marks, incomplete data).</li>
-                        <li><strong>Question 2</strong>: Ratio analysis ( theory and numerical, Part 6).
-                            - (a) Explain ratio analysis for investors (50 marks).
-                            - (b) Calculate and comment on ratios for Palmer Plastics Ltd. (50 marks, incomplete data).
+                        <li><strong>Structure</strong>: Answer 3 of 5 questions, each worth 100 marks, in English. Tests both <strong>theory</strong> (concept explanation) and <strong>numerical</strong> skills (calculations, financial statements).</li>
+                        <li><strong>Question Breakdown</strong>:
+                            <ul>
+                                <li><strong>Question 1</strong>: Working capital (Part 4, theory and numerical).
+                                    <ul>
+                                        <li>(a) List working capital components (20 marks).</li>
+                                        <li>(b) Explain working capital’s role in sustainability (20 marks).</li>
+                                        <li>(c) Calculate operating cash cycle (OCC) and suggest improvements for Richmond Retail Ltd. (60 marks, incomplete data).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Question 2</strong>: Ratio analysis (Part 6, theory and numerical).
+                                    <ul>
+                                        <li>(a) Explain ratio analysis for investors (50 marks).</li>
+                                        <li>(b) Calculate and comment on ratios for Palmer Plastics Ltd. (50 marks, incomplete data).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Question 3</strong>: Cash flow management (Part 3, theory).
+                                    <ul>
+                                        <li>(a) Importance of Statement of Cash Flows (30 marks).</li>
+                                        <li>(b) Daily cash balance monitoring (30 marks).</li>
+                                        <li>(c) Actions for cash availability in quiet periods (20 marks).</li>
+                                        <li>(d) Options for managing cash surplus (20 marks).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Question 4</strong>: Capital structure and financing (Part 7, theory).
+                                    <ul>
+                                        <li>(a) Sources of long-term capital (20 marks).</li>
+                                        <li>(b) Pros/cons of share capital (20 marks).</li>
+                                        <li>(c) Bank overdraft explanation and pros/cons (30 marks).</li>
+                                        <li>(d) Debt factoring for working capital (30 marks).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Question 5</strong>: Marginal costing and breakeven (Part 5, numerical).
+                                    <ul>
+                                        <li>(a) Prepare marginal costing P&L and calculate breakeven for Blanch Plant plc (100 marks, incomplete data).</li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
-                        <li><strong>Question 3</strong>: Cash flow management ( theory, Part 3).
-                            - (a) Importance of Statement of Cash Flows (30 marks).
-                            - (b) Daily cash balance monitoring (30 marks).
-                            - (c) Actions for cash availability in quiet periods (20 marks).
-                            - (d) Options for managing cash surplus (20 marks).</li>
-                        <li><strong>Question 4</strong>: Capital structure and financing ( theory, Part 7).
-                            - (a) Sources of long-term capital (20 marks).
-                            - (b) Pros/cons of share capital (20 marks).
-                            - (c) Bank overdraft explanation and pros/cons (30 marks).
-                            - (d) Debt factoring for working capital (30 marks).</li>
-                        <li><strong>Question 5</strong>: Marginal costing and breakeven (numerical, Part 5).
-                            - (a) Prepare marginal costing P&L and calculate breakeven for Blanch Plant plc (100 marks,
-                            incomplete data).</li>
+                        <li><strong>Alignment with Revision Materials</strong>:
+                            <ul>
+                                <li><strong>Question 1</strong>: Relates to Part 4 (working capital, OCC for Scholars Ltd.).</li>
+                                <li><strong>Question 2</strong>: Matches Part 6 (ratios for Forrest Ltd., investor perspectives).</li>
+                                <li><strong>Question 3</strong>: Links to Part 3 (cash flow forecasting for Marley Ltd.).</li>
+                                <li><strong>Question 4</strong>: Corresponds to Part 7 (capital structure, financing options).</li>
+                                <li><strong>Question 5</strong>: Aligns with Part 5 (marginal costing, breakeven for Q4 firm).</li>
+                            </ul>
+                        </li>
                     </ul>
-                </li>
-                <li><strong>Alignment with Revision Materials</strong>:
-                    - <strong>Question 1</strong>: Directly relates to Part 4 (working capital, OCC for Scholars Ltd.).
-                    - <strong>Question 2</strong>: Matches Part 6 (ratios for Forrest Ltd., investor perspectives).
-                    - <strong>Question 3</strong>: Links to Part 3 (cash flow forecasting for Marley Ltd.).
-                    - <strong>Question 4</strong>: Corresponds to Part 7 (capital structure, financing options).
-                    - <strong>Question 5</strong>: Aligns with Part 5 (marginal costing, breakeven for Q4 firm).</li>
-            </ul>
-        </div>
+                </div>
+            </article>
 
-        <button class="collapsible">Question 1: Working Capital (Part 4)</button>
-        <div class="content">
-            <ul>
-                <li><strong>(a) List the main components of working capital (20 marks)</strong>:
-                    - <strong>Answer</strong>: Working capital = Current Assets - Current Liabilities.
-                    - <strong>Current Assets</strong>: Inventories, trade receivables, cash (e.g., Scholars Ltd.: €176k,
-                    €250k, €48k, Part 4).
-                    - <strong>Current Liabilities</strong>: Trade payables, taxation (e.g., Scholars Ltd.: €156k, €14k).
-                </li>
-                - <strong>Preparation</strong>:
-                - Memorize components and examples from Part 4 (Scholars Ltd.’s €304k net current assets).
-                - Practice listing 3–4 components with definitions (e.g., inventories: goods held for sale).
-                - Example: Current assets include cash (€48k for Scholars Ltd.), receivables (€250k), and inventories
-                (€176k).</li>
-            </ul>
+            <article>
+                <button class="collapsible" aria-expanded="false" aria-controls="q1">Question 1: Working Capital (Part 4)</button>
+                <div class="content" id="q1">
+                    <h3>Components of Working Capital</h3>
+                    <ul>
+                        <li><strong>(a) List the main components of working capital (20 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>: Working capital = Current Assets - Current Liabilities.</li>
+                                <li><strong>Current Assets</strong>: Inventories, trade receivables, cash (e.g., Scholars Ltd.: €176k, €250k, €48k).</li>
+                                <li><strong>Current Liabilities</strong>: Trade payables, taxation (e.g., Scholars Ltd.: €156k, €14k).</li>
+                                <li><strong>Preparation</strong>: Memorize components and examples from Part 4 (Scholars Ltd.’s €304k net current assets). Practice listing 3–4 components with definitions. Example: Current assets include cash (€48k for Scholars Ltd.), receivables (€250k), and inventories (€176k).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h3>Role in Sustainability</h3>
+                    <ul>
+                        <li><strong>(b) Why is working capital key to sustainability? (20 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>Liquidity</strong>: Ensures payment of obligations (e.g., Scholars Ltd.’s €156k payables).</li>
+                                        <li><strong>Operational Continuity</strong>: Funds daily operations (e.g., inventory purchases).</li>
+                                        <li><strong>Growth Support</strong>: Enables investment in new opportunities.</li>
+                                        <li><strong>Risk Mitigation</strong>: Buffers against cash shortages (e.g., Marley Ltd.’s low February balance, Part 3).</li>
+                                        <li><strong>Stakeholder Confidence</strong>: Signals financial health to creditors/investors (Part 2, Q3).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: List 4–5 points with examples from Scholars Ltd. or Forrest Ltd. Practice explaining sustainability links. Example: Working capital ensures Scholars Ltd. can pay €156k payables, maintaining supplier trust.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h3>Operating Cash Cycle (OCC)</h3>
+                    <ul>
+                        <li><strong>(c) Calculate OCC and suggest improvements for Richmond Retail Ltd. (60 marks)</strong>:
+                            <ul>
+                                <li><strong>Issue</strong>: Financial statement data is missing, but assume similar to Scholars Ltd. (sales €1,825k, cost of sales €1,144k, inventories €176k, receivables €250k, payables €156k).</li>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>OCC Formula</strong>: Inventory Days + Receivables Days - Payables Days.</li>
+                                        <li><strong>Calculation</strong>:
+                                            <ul>
+                                                <li>Inventory Days: (€176k ÷ €1,144k) × 365 ≈ 56.15 days.</li>
+                                                <li>Receivables Days: (€250k ÷ €1,825k) × 365 ≈ 50 days.</li>
+                                                <li>Payables Days: (€156k ÷ €1,136k) × 365 ≈ 50.12 days.</li>
+                                                <li>OCC: 56.15 + 50 - 50.12 ≈ 56.03 days.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Improvements</strong>:
+                                            <ul>
+                                                <li>Reduce inventory days: Use just-in-time inventory.</li>
+                                                <li>Shorten receivables days: Tighten credit terms or offer discounts.</li>
+                                                <li>Extend payables days: Negotiate longer supplier terms.</li>
+                                                <li>Streamline operations: Automate invoicing or inventory tracking.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: Practice OCC calculations with hypothetical data. List 4–5 improvement strategies. Example: Reducing receivables to 30 days lowers OCC to ~36 days, improving liquidity.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </article>
 
-            <ul>
-                <li><strong>(b) Why is working capital key to sustainability? (20 marks)</strong>:
-                    - <strong>Answer</strong> (from Part 4, Q2, Q3):
-                    - <strong>Liquidity</strong>: Ensures payment of obligations (e.g., Scholars Ltd.’s €156k payables).
-                    - <strong>Operational Continuity</strong>: Funds daily operations (e.g., inventory purchases).
-                    - <strong>Growth Support</strong>: Enables investment in new opportunities.
-                    - <strong>Risk Mitigation</strong>: Buffers against cash shortages (e.g., Marley Ltd.’s low February
-                    balance, Part 3).
-                    - <strong>Stakeholder Confidence</strong>: Signals financial health to creditors/investors (Part 2,
-                    Q3).
-                </li>
-                - <strong>Preparation</strong>:
-                - List 4–5 points with examples from Scholars Ltd. or Forrest Ltd. (Part 6).
-                - Practice explaining sustainability links (e.g., avoiding insolvency).
-                - Example: Working capital ensures Scholars Ltd. can pay €156k payables, maintaining supplier trust.
-                </li>
-            </ul>
+            <article>
+                <button class="collapsible" aria-expanded="false" aria-controls="q2">Question 2: Ratio Analysis (Part 6)</button>
+                <div class="content" id="q2">
+                    <h3>Investor Perspective</h3>
+                    <ul>
+                        <li><strong>(a) Explain ratio analysis for investors (50 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>Definition</strong>: Ratio analysis manipulates financial statement balances to assess performance (profitability, efficiency) and position (liquidity, solvency).</li>
+                                        <li><strong>Investor Perspective</strong>:
+                                            <ul>
+                                                <li><strong>Profitability</strong>: Gross profit margin (Forrest Ltd.’s 32.17%), net profit margin (16.52%), ROCE (32.65%).</li>
+                                                <li><strong>Liquidity</strong>: Current ratio (Forrest Ltd.’s 1.93:1).</li>
+                                                <li><strong>Efficiency</strong>: Receivables (32 days), payables (95 days).</li>
+                                                <li><strong>Solvency</strong>: Debt-to-equity (Forrest Ltd.’s 0.16).</li>
+                                                <li><strong>Qualitative Factors</strong>: Industry trends, management quality.</li>
+                                                <li><strong>Why Important</strong>: Assesses share value, growth potential, and risk.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: Explain 4–5 ratio types with investor relevance, using Forrest Ltd. examples. Discuss qualitative factors. Example: Investors use Forrest Ltd.’s 32.65% ROCE to gauge capital efficiency.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h3>Ratio Calculations</h3>
+                    <ul>
+                        <li><strong>(b) Calculate and comment on ratios for Palmer Plastics Ltd. (50 marks)</strong>:
+                            <ul>
+                                <li><strong>Issue</strong>: Financial statement data is missing, but assume similar to Forrest Ltd. (sales €5,750k, gross profit €1,850k, net profit €834k, current assets €2,100k, etc.).</li>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>Gross Profit Margin</strong>: (€1,850k ÷ €5,750k) × 100 ≈ 32.17%. Moderate profitability.</li>
+                                        <li><strong>Net Profit Margin</strong>: (€834k ÷ €5,750k) × 100 ≈ 16.52%. Good cost control.</li>
+                                        <li><strong>ROCE</strong>: (€950k ÷ €2,910k) × 100 ≈ 32.65%. High return on capital.</li>
+                                        <li><strong>Current Ratio</strong>: €2,100k ÷ €1,090k ≈ 1.93:1. Good liquidity.</li>
+                                        <li><strong>Acid Test Ratio</strong>: (€2,100k - €1,360k) ÷ €1,090k ≈ 0.68:1. Inventory reliance.</li>
+                                        <li><strong>Inventory Turnover</strong>: (€1,360k ÷ €3,900k) × 365 ≈ 127 days. Slow inventory movement.</li>
+                                        <li><strong>Receivables Days</strong>: (€500k ÷ €5,750k) × 365 ≈ 32 days. Efficient collections.</li>
+                                        <li><strong>Payables Days</strong>: (€1,020k ÷ €3,900k) × 365 ≈ 95 days. Long payment terms.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: Practice calculating all 8 ratios from Part 6, with brief commentary. Use tables to present calculations. Example: Palmer’s 0.68:1 acid test suggests liquidity risks if inventory sales slow.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </article>
 
-            <ul>
-                <li><strong>(c) Calculate OCC and suggest improvements for Richmond Retail Ltd. (60 marks)</strong>:
-                    - <strong>Issue</strong>: Financial statement data is missing, but assume similar to Scholars Ltd.
-                    (Part
-                    4: sales €1,825k, cost of sales €1,144k, inventories €176k, receivables €250k, payables €156k).
-                    - <strong>Answer</strong> (based on Part 4, Q1):
-                    - <strong>OCC Formula</strong>: Inventory Days + Receivables Days - Payables Days.
-                    - <strong>Calculation</strong> (using Scholars Ltd. as proxy):
-                    - Inventory Days: (€176k ÷ €1,144k) × 365 ≈ 56.15 days.
-                    - Receivables Days: (€250k ÷ €1,825k) × 365 ≈ 50 days.
-                    - Payables Days: (€156k ÷ €1,136k) × 365 ≈ 50.12 days.
-                    - OCC: 56.15 + 50 - 50.12 ≈ 56.03 days.
-                    - <strong>Improvements</strong>:
-                    - Reduce inventory days: Use just-in-time inventory (Part 4, Q2).
-                    - Shorten receivables days: Tighten credit terms or offer discounts (Part 4, Q1).
-                    - Extend payables days: Negotiate longer supplier terms.
-                    - Streamline operations: Automate invoicing or inventory tracking.</li>
-                - <strong>Preparation</strong>:
-                - Practice OCC calculations with hypothetical data (e.g., adjust Scholars Ltd.’s figures).
-                - List 4–5 improvement strategies with practical examples.
-                - Example: Reducing receivables to 30 days lowers OCC to ~36 days, improving liquidity.</li>
-            </ul>
-        </div>
+            <article>
+                <button class="collapsible" aria-expanded="false" aria-controls="q3">Question 3: Cash Flow Management (Part 3)</button>
+                <div class="content" id="q3">
+                    <h3>Statement of Cash Flows</h3>
+                    <ul>
+                        <li><strong>(a) Importance of Statement of Cash Flows (30 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>Tracks Cash Movements</strong>: Shows cash inflows/outflows from operating, investing, financing activities (e.g., Marley Ltd.’s €172.4k closing balance).</li>
+                                        <li><strong>Liquidity Assessment</strong>: Ensures ability to pay obligations.</li>
+                                        <li><strong>Decision-Making</strong>: Investors assess cash generation.</li>
+                                        <li><strong>Solvency</strong>: Indicates ability to meet long-term debts.</li>
+                                        <li><strong>Transparency</strong>: Complements profit figures, revealing cash reality.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: List 4–5 reasons with stakeholder examples. Link to Marley Ltd.’s forecast. Example: Investors use Marley Ltd.’s cash flow to assess dividend sustainability.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h3>Daily Cash Monitoring</h3>
+                    <ul>
+                        <li><strong>(b) Why monitor cash balance daily? (30 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>Avoid Shortages</strong>: Ensures funds for wages, suppliers (e.g., Marley Ltd.’s €1.8k February low).</li>
+                                        <li><strong>Cash Flow Management</strong>: Tracks inflows/outflows to prevent overdrafts.</li>
+                                        <li><strong>Operational Control</strong>: Identifies spending patterns or delays in collections.</li>
+                                        <li><strong>Decision-Making</strong>: Informs immediate actions.</li>
+                                        <li><strong>Risk Mitigation</strong>: Prevents insolvency during low cash periods.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: Explain 4–5 reasons, using Marley Ltd.’s cash flow issues as examples. Example: Daily monitoring prevents Marley Ltd.’s February cash dip from disrupting payments.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h3>Quiet Trading Periods</h3>
+                    <ul>
+                        <li><strong>(c) Actions for cash in quiet trading periods (20 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>Tighten Credit Terms</strong>: Reduce receivables days (e.g., Scholars Ltd.’s 50 days to 30).</li>
+                                        <li><strong>Debt Factoring</strong>: Convert receivables to cash.</li>
+                                        <li><strong>Delay Payments</strong>: Extend payables days (e.g., Forrest Ltd.’s 95 days).</li>
+                                        <li><strong>Reduce Inventory</strong>: Lower holding costs.</li>
+                                        <li><strong>Secure Overdraft</strong>: Cover temporary shortages.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: List 4–5 actions with practical examples. Example: Factoring Scholars Ltd.’s €250k receivables provides immediate cash.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h3>Cash Surplus Options</h3>
+                    <ul>
+                        <li><strong>(d) Options for cash surplus (20 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>Invest in Growth</strong>: Fund new projects or equipment.</li>
+                                        <li><strong>Repay Debt</strong>: Reduce interest costs (e.g., Forrest Ltd.’s €400k loan notes).</li>
+                                        <li><strong>Pay Dividends</strong>: Reward shareholders.</li>
+                                        <li><strong>Build Reserves</strong>: Save for future needs.</li>
+                                        <li><strong>Short-Term Investments</strong>: Earn interest on excess cash.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: List 4–5 options, linking to financial management. Example: Marley Ltd.’s €172.4k surplus could fund inventory expansion.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </article>
 
-        <button class="collapsible">Question 2: Ratio Analysis (Part 6)</button>
-        <div class="content">
-            <ul>
-                <li><strong>(a) Explain ratio analysis for investors (50 marks)</strong>:
-                    - <strong>Answer</strong> (from Part 6, Q1):
-                    - <strong>Definition</strong>: Ratio analysis manipulates financial statement balances to assess
-                    performance (profitability, efficiency) and position (liquidity, solvency).
-                    - <strong>Investor Perspective</strong>:
-                    - <strong>Profitability</strong>: Gross profit margin (e.g., Forrest Ltd.’s 32.17%), net profit
-                    margin
-                    (16.52%), ROCE (32.65%) indicate returns.
-                    - <strong>Liquidity</strong>: Current ratio (Forrest Ltd.’s 1.93:1) shows ability to meet
-                    obligations.
-                    - <strong>Efficiency</strong>: Receivables (32 days) and payables (95 days) assess cash flow
-                    management.
-                    - <strong>Solvency</strong>: Debt-to-equity (Forrest Ltd.’s 0.16) evaluates risk.
-                    - <strong>Qualitative Factors</strong>: Industry trends, management quality (Part 6, Q1a).
-                    - <strong>Why Important</strong>: Helps investors assess share value, growth potential, and risk
-                    (Part
-                    2, Q3).</li>
-                - <strong>Preparation</strong>:
-                - Explain 4–5 ratio types with investor relevance, using Forrest Ltd. examples.
-                - Discuss qualitative factors (e.g., market conditions) to score high marks.
-                - Example: Investors use Forrest Ltd.’s 32.65% ROCE to gauge capital efficiency.</li>
-            </ul>
+            <article>
+                <button class="collapsible" aria-expanded="false" aria-controls="q4">Question 4: Capital Structure and Financing (Part 7)</button>
+                <div class="content" id="q4">
+                    <h3>Long-Term Capital Sources</h3>
+                    <ul>
+                        <li><strong>(a) Sources of long-term capital for large organizations (20 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>Ordinary Shares</strong>: Equity from investors (e.g., Forrest Ltd.’s €1,000k).</li>
+                                        <li><strong>Preference Shares</strong>: Fixed dividend shares.</li>
+                                        <li><strong>Bank Loans/Bonds</strong>: Debt financing (e.g., Forrest Ltd.’s €400k loan notes).</li>
+                                        <li><strong>Retained Earnings</strong>: Reinvested profits (e.g., Forrest Ltd.’s €1,510k).</li>
+                                        <li><strong>Venture Capital</strong>: Equity for growth firms.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: List 4–5 sources with examples from Forrest Ltd. Differentiate equity vs. debt. Example: Bonds provide Forrest Ltd. with stable, long-term funding.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h3>Share Capital</h3>
+                    <ul>
+                        <li><strong>(b) Pros/cons of issuing share capital (20 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>Advantages</strong>: No repayment, improves liquidity, reduces debt ratio (e.g., Forrest Ltd.’s 0.16).</li>
+                                        <li><strong>Disadvantages</strong>: Dilutes ownership, dividend expectations, issuing costs.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: List 3–4 pros and cons, linking to Forrest Ltd. or Scholars Ltd. Example: Issuing shares boosts Scholars Ltd.’s cash but dilutes control.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h3>Bank Overdraft</h3>
+                    <ul>
+                        <li><strong>(c) Bank overdraft explanation and pros/cons (30 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>Definition</strong>: Short-term facility to overdraw account (e.g., for Marley Ltd.’s cash shortages).</li>
+                                        <li><strong>Advantages</strong>: Flexible, quick, supports working capital.</li>
+                                        <li><strong>Disadvantages</strong>: High interest, repayable on demand, fees.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: Define overdraft and list 3–4 pros/cons with examples. Example: Overdraft helps Marley Ltd. cover €1.8k February shortfall but risks high costs.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h3>Debt Factoring</h3>
+                    <ul>
+                        <li><strong>(d) Debt factoring for working capital (30 marks)</strong>:
+                            <ul>
+                                <li><strong>Answer</strong>:
+                                    <ul>
+                                        <li><strong>How It Helps</strong>: Converts receivables to cash, reduces OCC (e.g., Scholars Ltd.’s 50 days), funds payables, supports growth.</li>
+                                        <li><strong>Drawbacks</strong>: Fees reduce profits, affects customer relations.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Preparation</strong>: Explain 4–5 benefits and 1–2 drawbacks, linking to Part 4. Example: Factoring Forrest Ltd.’s €500k receivables shortens OCC to 52 days.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </article>
 
-            <ul>
-                <li><strong>(b) Calculate and comment on ratios for Palmer Plastics Ltd. (50 marks)</strong>:
-                    - <strong>Issue</strong>: Financial statement data is missing, but assume similar to Forrest Ltd.
-                    (Part
-                    6: sales €5,750k, gross profit €1,850k, net profit €834k, current assets €2,100k, etc.).
-                    - <strong>Answer</strong> (based on Part 6, Q2):
-                    - <strong>Gross Profit Margin</strong>: (€1,850k ÷ €5,750k) × 100 ≈ 32.17%. Indicates moderate
-                    profitability.
-                    - <strong>Net Profit Margin</strong>: (€834k ÷ €5,750k) × 100 ≈ 16.52%. Shows good cost control.
-                    - <strong>ROCE</strong>: (€950k ÷ €2,910k) × 100 ≈ 32.65%. High return on capital.
-                    - <strong>Current Ratio</strong>: €2,100k ÷ €1,090k ≈ 1.93:1. Good liquidity.
-                    - <strong>Acid Test Ratio</strong>: (€2,100k - €1,360k) ÷ €1,090k ≈ 0.68:1. Inventory reliance.
-                    - <strong>Inventory Turnover</strong>: (€1,360k ÷ €3,900k) × 365 ≈ 127 days. Slow inventory
-                    movement.
-                    - <strong>Receivables Days</strong>: (€500k ÷ €5,750k) × 365 ≈ 32 days. Efficient collections.
-                    - <strong>Payables Days</strong>: (€1,020k ÷ €3,900k) × 365 ≈ 95 days. Long payment terms.</li>
-                - <strong>Preparation</strong>:
-                - Practice calculating all 8 ratios from Part 6, with brief commentary (e.g., compare to industry
-                norms).
-                - Use tables to present calculations clearly.
-                - Example: Palmer’s 0.68:1 acid test suggests liquidity risks if inventory sales slow.</li>
-            </ul>
-        </div>
-
-        <button class="collapsible">Question 3: Cash Flow Management (Part 3)</button>
-        <div class="content">
-            <ul>
-                <li><strong>(a) Importance of Statement of Cash Flows (30 marks)</strong>:
-                    - <strong>Answer</strong> (from Part 3, Q1):
-                    - <strong>Tracks Cash Movements</strong>: Shows cash inflows/outflows from operating, investing,
-                    financing activities (e.g., Marley Ltd.’s €172.4k closing balance).
-                    - <strong>Liquidity Assessment</strong>: Ensures ability to pay obligations (Part 2, Q3, creditors).
-                    - <strong>Decision-Making</strong>: Investors assess cash generation (e.g., operating cash flow).
-                    - <strong>Solvency</strong>: Indicates ability to meet long-term debts (Part 6, debt-to-equity).
-                    - <strong>Transparency</strong>: Complements profit figures, revealing cash reality (e.g., non-cash
-                    depreciation, Part 3).</li>
-                - <strong>Preparation</strong>:
-                - List 4–5 reasons with stakeholder examples (e.g., creditors, investors).
-                - Link to Marley Ltd.’s forecast (Part 3, Q1).
-                - Example: Investors use Marley Ltd.’s cash flow to assess dividend sustainability.</li>
-            </ul>
-
-            <ul>
-                <li><strong>(b) Why monitor cash balance daily? (30 marks)</strong>:
-                    - <strong>Answer</strong> (from Part 3, Q1):
-                    - <strong>Avoid Shortages</strong>: Ensures funds for wages, suppliers (e.g., Marley Ltd.’s €1.8k
-                    February low).
-                    - <strong>Cash Flow Management</strong>: Tracks inflows/outflows to prevent overdrafts (Part 7,
-                    Q2c).
-                    - <strong>Operational Control</strong>: Identifies spending patterns or delays in collections.
-                    - <strong>Decision-Making</strong>: Informs immediate actions (e.g., delay payments, Part 4).
-                    - <strong>Risk Mitigation</strong>: Prevents insolvency during low cash periods.</li>
-                - <strong>Preparation</strong>:
-                - Explain 4–5 reasons, using Marley Ltd.’s cash flow issues as examples.
-                - Emphasize internal management focus (Part 5, Q1).
-                - Example: Daily monitoring prevents Marley Ltd.’s February cash dip from disrupting payments.</li>
-            </ul>
-
-            <ul>
-                <li><strong>(c) Actions for cash in quiet trading periods (20 marks)</strong>:
-                    - <strong>Answer</strong> (from Parts 3, 4, 7):
-                    - <strong>Tighten Credit Terms</strong>: Reduce receivables days (e.g., Scholars Ltd.’s 50 days to
-                    30).
-                    - <strong>Debt Factoring</strong>: Convert receivables to cash (Part 7, Q2d).
-                    - <strong>Delay Payments</strong>: Extend payables days (e.g., Forrest Ltd.’s 95 days).
-                    - <strong>Reduce Inventory</strong>: Lower holding costs (Part 4, Q2).
-                    - <strong>Secure Overdraft</strong>: Cover temporary shortages (Part 7, Q2c).</li>
-                - <strong>Preparation</strong>:
-                - List 4–5 actions with practical examples from revision materials.
-                - Link to working capital (Part 4) and financing (Part 7).
-                - Example: Factoring Scholars Ltd.’s €250k receivables provides immediate cash.</li>
-            </ul>
-
-            <ul>
-                <li><strong>(d) Options for cash surplus (20 marks)</strong>:
-                    - <strong>Answer</strong> (from Parts 3, 7):
-                    - <strong>Invest in Growth</strong>: Fund new projects or equipment (Part 4, Q2).
-                    - <strong>Repay Debt</strong>: Reduce interest costs (e.g., Forrest Ltd.’s €400k loan notes).
-                    - <strong>Pay Dividends</strong>: Reward shareholders (Part 6, investor focus).
-                    - <strong>Build Reserves</strong>: Save for future needs (Part 3, Q1).
-                    - <strong>Short-Term Investments</strong>: Earn interest on excess cash.</li>
-                - <strong>Preparation</strong>:
-                - List 4–5 options, linking to financial management (Part 3) and stakeholders (Part 2).
-                - Example: Marley Ltd.’s €172.4k surplus could fund inventory expansion.</li>
-            </ul>
-        </div>
-
-        <button class="collapsible">Question 4: Capital Structure and Financing (Part 7)</button>
-        <div class="content">
-            <ul>
-                <li><strong>(a) Sources of long-term capital for large organizations (20 marks)</strong>:
-                    - <strong>Answer</strong> (from Part 7, Q1a):
-                    - <strong>Ordinary Shares</strong>: Equity from investors (e.g., Forrest Ltd.’s €1,000k).
-                    - <strong>Preference Shares</strong>: Fixed dividend shares.
-                    - <strong>Bank Loans/Bonds</strong>: Debt financing (e.g., Forrest Ltd.’s €400k loan notes).
-                    - <strong>Retained Earnings</strong>: Reinvested profits (e.g., Forrest Ltd.’s €1,510k).
-                    - <strong>Venture Capital</strong>: Equity for growth firms.</li>
-                - <strong>Preparation</strong>:
-                - List 4–5 sources with examples from Forrest Ltd.
-                - Differentiate equity vs. debt (Part 7, Q1c).
-                - Example: Bonds provide Forrest Ltd. with stable, long-term funding.</li>
-            </ul>
-
-            <ul>
-                <li><strong>(b) Pros/cons of issuing share capital (20 marks)</strong>:
-                    - <strong>Answer</strong> (from Part 7, Q2a):
-                    - <strong>Advantages</strong>: No repayment, improves liquidity, reduces debt ratio (e.g., Forrest
-                    Ltd.’s 0.16).
-                    - <strong>Disadvantages</strong>: Dilutes ownership, dividend expectations, issuing costs.</li>
-                - <strong>Preparation</strong>:
-                - List 3–4 pros and cons, linking to Forrest Ltd. or Scholars Ltd.
-                - Example: Issuing shares boosts Scholars Ltd.’s cash but dilutes control.</li>
-            </ul>
-
-            <ul>
-                <li><strong>(c) Bank overdraft explanation and pros/cons (30 marks)</strong>:
-                    - <strong>Answer</strong> (from Part 7, Q2b):
-                    - <strong>Definition</strong>: Short-term facility to overdraw account (e.g., for Marley Ltd.’s cash
-                    shortages).
-                    - <strong>Advantages</strong>: Flexible, quick, supports working capital (Part 4).
-                    - <strong>Disadvantages</strong>: High interest, repayable on demand, fees.</li>
-                - <strong>Preparation</strong>:
-                - Define overdraft and list 3–4 pros/cons with examples.
-                - Example: Overdraft helps Marley Ltd. cover €1.8k February shortfall but risks high costs.</li>
-            </ul>
-
-            <ul>
-                <li><strong>(d) Debt factoring for working capital (30 marks)</strong>:
-                    - <strong>Answer</strong> (from Part 7, Q2c):
-                    - <strong>How It Helps</strong>: Converts receivables to cash, reduces OCC (e.g., Scholars Ltd.’s 50
-                    days), funds payables, supports growth.
-                    - <strong>Drawbacks</strong>: Fees reduce profits, affects customer relations.</li>
-                - <strong>Preparation</strong>:
-                - Explain 4–5 benefits and 1–2 drawbacks, linking to Part 4 (OCC, working capital).
-                - Example: Factoring Forrest Ltd.’s €500k receivables shortens OCC to 52 days.</li>
-            </ul>
-        </div>
-
-        <button class="collapsible">Question 5: Marginal Costing and Breakeven (Part 5)</button>
-        <div class="content">
-            <ul>
-                <li><strong>(a) Prepare marginal costing P&L and breakeven for Blanch Plant plc (100 marks)</strong>:
-                    - <strong>Issue</strong>: Data is incomplete (selling price €X.00, variable cost €X.30, fixed
-                    overheads
-                    €3,500,000, general overheads €1,900,000, inventories: 5,000/5,000/7,000 units).
-                    - <strong>Answer</strong> (based on Part 5, Q4 as proxy: €4.5/unit, €2.75/unit, €63,000 fixed,
-                    7,000/60,000/9,000 units, 58,000 sold):
-                    - <strong>Marginal Costing P&L</strong>:
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>€</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Sales (58,000 × €4.5)</td>
-                                <td>261,000</td>
-                            </tr>
-                            <tr>
-                                <td>Less: Variable Costs (58,000 × €2.75)</td>
-                                <td>159,500</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Contribution</strong></td>
-                                <td>101,500</td>
-                            </tr>
-                            <tr>
-                                <td>Less: Fixed Costs (€40,500 + €22,500)</td>
-                                <td>63,000</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Net Profit</strong></td>
-                                <td>38,500</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    - <strong>Breakeven (Units)</strong>: €63,000 ÷ (€4.5 - €2.75) ≈ 36,000 units.
-                    - <strong>Breakeven (Value)</strong>: 36,000 × €4.5 = €162,000.
-                </li>
-                - <strong>Preparation</strong>:
-                - Practice marginal costing P&L and breakeven with hypothetical data (e.g., assume €5/unit, €3/unit for
-                Blanch Plant).
-                - Show calculations clearly in tables.
-                - Example: If Blanch Plant’s selling price is €5, breakeven is €5,400,000 ÷ (€5 - €3) = 2,700,000 units.
-                </li>
-            </ul>
-        </div>
-    </section>
+            <article>
+                <button class="collapsible" aria-expanded="false" aria-controls="q5">Question 5: Marginal Costing and Breakeven (Part 5)</button>
+                <div class="content" id="q5">
+                    <h3>Marginal Costing and Breakeven</h3>
+                    <ul>
+                        <li><strong>(a) Prepare marginal costing P&L and breakeven for Blanch Plant plc (100 marks)</strong>:
+                            <ul>
+                                <li><strong>Issue</strong>: Data is incomplete (selling price €X.00, variable cost €X.30, fixed overheads €3,500,000, general overheads €1,900,000, inventories: 5,000/5,000/7,000 units).</li>
+                                <li><strong>Answer</strong> (based on Part 5, Q4: €4.5/unit, €2.75/unit, €63,000 fixed, 7,000/60,000/9,000 units, 58,000 sold):
+                                    <table aria-label="Marginal Costing Profit and Loss Statement">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>€</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Sales (58,000 × €4.5)</td>
+                                                <td>261,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Less: Variable Costs (58,000 × €2.75)</td>
+                                                <td>159,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Contribution</strong></td>
+                                                <td>101,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Less: Fixed Costs (€40,500 + €22,500)</td>
+                                                <td>63,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Net Profit</strong></td>
+                                                <td>38,500</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p><strong>Breakeven (Units)</strong>: €63,000 ÷ (€4.5 - €2.75) ≈ 36,000 units.</p>
+                                    <p><strong>Breakeven (Value)</strong>: 36,000 × €4.5 = €162,000.</p>
+                                </li>
+                                <li><strong>Preparation</strong>: Practice marginal costing P&L and breakeven with hypothetical data. Show calculations in tables. Example: If Blanch Plant’s selling price is €5, breakeven is €5,400,000 ÷ (€5 - €3) = 2,700,000 units.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Accounting Exam Revision Study Site. All rights reserved.</p>
+    </footer>
     <script>
-        // Smooth scrolling for nav links
+        // Smooth scrolling for navigation links
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+                    behavior: 'smooth',
+                    block: 'start'
                 });
+                document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
             });
         });
 
         // Collapsible sections
-        const collapsibles = document.querySelectorAll('.collapsible');
-        collapsibles.forEach(button => {
+        document.querySelectorAll('.collapsible').forEach(button => {
             button.addEventListener('click', function () {
-                this.classList.toggle('active');
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isExpanded);
                 const content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
+                content.classList.toggle('active');
+                content.style.display = content.classList.contains('active') ? 'block' : 'none';
             });
+        });
+
+        // Hamburger menu toggle
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.toggle('active');
         });
     </script>
 </body>
-
 </html>
