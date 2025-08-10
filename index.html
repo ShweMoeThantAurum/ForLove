@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Love Ledger</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Open+Sans:wght@300;400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #FFE1E9 0%, #FFB1C8 100%);
-            color: #4A2C3C;
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(145deg, #FFDDE6 0%, #FFABC7 100%);
+            color: #3E1F2F;
             min-height: 100vh;
-            padding: 2rem;
+            padding: 1rem;
             overflow-y: auto;
         }
 
@@ -26,23 +26,26 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 225, 233, 0.9);
+            background: rgba(255, 221, 230, 0.95);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            transition: opacity 0.5s ease;
+            opacity: 1;
+            transition: opacity 0.7s ease-out;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .loading-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            color: #D81B60;
+            text-align: center;
+            color: #C2185B;
+            font-family: 'Cormorant Garamond', serif;
             font-size: 1.25rem;
-            font-weight: 500;
-            font-family: 'Playfair Display', serif;
+            font-weight: 600;
         }
 
         .loading-heart {
@@ -51,7 +54,8 @@
             background: #FF80AB;
             position: relative;
             transform: rotate(45deg);
-            animation: heartbeat 1.4s ease-in-out infinite;
+            margin: 0 auto 0.75rem;
+            animation: pulse 1.5s ease-in-out infinite;
         }
 
         .loading-heart::before,
@@ -74,36 +78,36 @@
             top: 0;
         }
 
-        @keyframes heartbeat {
+        @keyframes pulse {
             0% {
                 transform: rotate(45deg) scale(1);
             }
 
-            20% {
-                transform: rotate(45deg) scale(1.25);
+            25% {
+                transform: rotate(45deg) scale(1.2);
             }
 
-            40% {
+            50% {
                 transform: rotate(45deg) scale(1);
             }
 
-            60% {
-                transform: rotate(45deg) scale(1.15);
+            75% {
+                transform: rotate(45deg) scale(1.1);
             }
 
-            80% {
+            100% {
                 transform: rotate(45deg) scale(1);
             }
         }
 
         .fade-in {
-            animation: fadeIn 1s ease-out;
+            animation: fadeIn 1.2s ease-out forwards;
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
 
             to {
@@ -112,123 +116,204 @@
             }
         }
 
-        .love-card {
-            background: #FFF0F5;
-            border-radius: 20px;
+        .card {
+            background: #FFF5F7;
+            border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 6px 20px rgba(216, 27, 96, 0.15);
+            box-shadow: 0 6px 20px rgba(194, 24, 91, 0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .love-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 30px rgba(216, 27, 96, 0.25);
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 28px rgba(194, 24, 91, 0.2);
         }
 
-        .expense-card,
-        .movie-card {
-            background: #FFE4E9;
-            border-radius: 12px;
-            padding: 1rem;
+        .item-card {
+            background: #FFE8ED;
+            border-radius: 8px;
+            padding: 0.75rem;
             margin-bottom: 0.75rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.2s ease;
+            transition: background 0.3s ease;
         }
 
-        .expense-card:hover,
-        .movie-card:hover {
-            background: #FFD1DC;
+        .item-card:hover {
+            background: #FFCAD4;
         }
 
         .icon {
             font-size: 1.5rem;
-            color: #D81B60;
+            color: #C2185B;
             transition: transform 0.3s ease;
         }
 
         .icon:hover {
-            transform: scale(1.3);
+            transform: scale(1.2);
         }
 
         h1,
         h2 {
-            font-family: 'Playfair Display', serif;
-            color: #D81B60;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-family: 'Cormorant Garamond', serif;
+            color: #C2185B;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
-        .hover-pink:hover {
-            color: #F06292;
+        .hover-accent:hover {
+            color: #E91E63;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 50%;
+            height: 2px;
+            background: #FF80AB;
+            position: absolute;
+            bottom: -4px;
+            left: 25%;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 640px) {
+            body {
+                padding: 0.75rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .item-card {
+                padding: 0.5rem;
+                font-size: 0.875rem;
+            }
+
+            .loading-content {
+                font-size: 1rem;
+            }
+
+            .loading-heart {
+                width: 40px;
+                height: 40px;
+            }
+
+            .loading-heart::before,
+            .loading-heart::after {
+                width: 40px;
+                height: 40px;
+            }
+
+            .loading-heart::before {
+                top: -20px;
+            }
+
+            .loading-heart::after {
+                left: -20px;
+            }
+
+            .icon {
+                font-size: 1.25rem;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0 0.5rem;
+            }
+
+            .text-2xl {
+                font-size: 1.25rem;
+            }
+
+            .text-sm {
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1 class="text-4xl font-bold mb-8 text-center hover-pink">Our Love Ledger</h1>
+        <h1 class="text-5xl font-semibold mb-10 text-center hover-accent">Our Love Ledger</h1>
         <!-- Loading Overlay -->
         <div id="loading" class="loading-overlay">
             <div class="loading-content">
                 <div class="loading-heart"></div>
-                <p>Weaving our love story...</p>
+                <p>Crafting our love story...</p>
             </div>
         </div>
         <!-- Content Container -->
         <div id="content" style="display: none;">
             <!-- Reminder Section -->
-            <div class="love-card fade-in">
-                <h2 class="text-2xl font-bold mb-4 text-center">Reminders</h2>
-                <div class="flex flex-col items-center gap-4">
+            <div class="card fade-in">
+                <h2 class="text-3xl font-semibold mb-6 text-center section-title">Reminders</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
                     <div>
-                        <p class="text-2xl font-bold hover-pink">€1369</p>
+                        <p class="text-2xl font-semibold hover-accent">€1369</p>
                         <p class="text-sm text-gray-600">ဖုန်းဖိုးပေးရန်ကျန်။</p>
                     </div>
                     <div>
-                        <p class="text-2xl font-bold hover-pink">€1275</p>
+                        <p class="text-2xl font-semibold hover-accent">€1275</p>
                         <p class="text-sm text-gray-600">အခန်းခပေးရန်ကျန်။</p>
                     </div>
                     <div>
-                        <p class="text-2xl font-bold hover-pink">€22.9</p>
+                        <p class="text-2xl font-semibold hover-accent">€22.9</p>
                         <p class="text-sm text-gray-600">Full Moonဖိုး မဇာလီဆီကတောင်းရန်၊ ဘေဘီ့ဆီကိုလွှဲရန်။</p>
                     </div>
                 </div>
             </div>
             <!-- Total Section -->
-            <div id="total" class="love-card fade-in">
-                <h2 class="text-2xl font-bold mb-4 text-center">Our Shared Costs</h2>
-                <div class="flex flex-col items-center gap-4">
-                    <p class="text-2xl font-bold hover-pink"></p>
-                    <p class="text-2xl font-bold hover-pink"></p>
+            <div id="total" class="card fade-in">
+                <h2 class="text-3xl font-semibold mb-6 text-center section-title">Our Shared Costs</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-center">
+                    <p class="text-2xl font-semibold hover-accent"></p>
+                    <p class="text-2xl font-semibold hover-accent"></p>
                 </div>
             </div>
             <!-- Expenses Section -->
-            <div id="expenses" class="love-card fade-in">
-                <h2 class="text-2xl font-bold mb-4 text-center">Our Dining Adventures</h2>
+            <div id="expenses" class="card fade-in">
+                <h2 class="text-3xl font-semibold mb-6 text-center section-title">Our Dining Adventures</h2>
                 <div id="expenseList"></div>
             </div>
             <!-- Movies Section -->
-            <div id="movies" class="love-card fade-in">
-                <h2 class="text-2xl font-bold mb-4 text-center">Movies We Watched Together</h2>
+            <div id="movies" class="card fade-in">
+                <h2 class="text-3xl font-semibold mb-6 text-center section-title">Movies We Watched Together</h2>
                 <div id="movieList"></div>
             </div>
             <!-- Last Updated -->
-            <div id="lastUpdated" class="love-card fade-in">
-                <div class="flex items-center justify-center gap-4">
+            <div id="lastUpdated" class="card fade-in">
+                <div class="flex items-center justify-center gap-3">
                     <i class="fas fa-heart icon"></i>
                     <p class="last-updated-text text-sm"></p>
                 </div>
             </div>
             <!-- Warning Section -->
-            <div class="love-card fade-in">
-                <div class="flex items-center justify-center gap-4 text-red-500">
+            <div class="card fade-in">
+                <div class="flex items-center justify-center gap-3 text-red-600">
                     <i class="fas fa-exclamation-circle icon"></i>
                     <p class="text-sm">အကြွေးမဆပ်ပါက လူကိုသိမ်းရမည်။</p>
                 </div>
@@ -245,7 +330,7 @@
             const lastUpdatedElement = document.getElementById('lastUpdated').querySelector('.last-updated-text');
 
             // Show loading, hide content
-            loadingElement.style.display = 'flex';
+            loadingElement.classList.remove('hidden');
             contentElement.style.display = 'none';
 
             try {
@@ -253,7 +338,7 @@
                 const data = await response.json();
 
                 // Hide loading, show content
-                loadingElement.style.display = 'none';
+                loadingElement.classList.add('hidden');
                 contentElement.style.display = 'block';
 
                 // Update total and mama pays
@@ -265,16 +350,16 @@
                 const validExpenses = data.expenses.filter(e => Number.isFinite(Number(e.amount)) && Number(e.amount) > 0);
                 const expenseDate = new Date(data.lastUpdated).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                 expenseList.innerHTML = validExpenses.map(e => `
-                    <div class="expense-card">
+                    <div class="item-card">
                         <span class="text-sm">${e.restaurant || 'N/A'} (${expenseDate})</span>
-                        <span class="text-sm font-bold">€${Number(e.amount).toFixed(2)}</span>
+                        <span class="text-sm font-semibold">€${Number(e.amount).toFixed(2)}</span>
                     </div>
                 `).join('');
                 expenseList.parentElement.classList.add('fade-in');
 
                 // Update movies
                 movieList.innerHTML = data.movies.map(movie => `
-                    <div class="movie-card">
+                    <div class="item-card">
                         <span class="text-sm">${movie}</span>
                     </div>
                 `).join('');
@@ -293,13 +378,13 @@
                 lastUpdatedElement.parentElement.classList.add('fade-in');
             } catch (error) {
                 // Hide loading, show content with error messages
-                loadingElement.style.display = 'none';
+                loadingElement.classList.add('hidden');
                 contentElement.style.display = 'block';
 
                 totalElements[0].textContent = 'Error fetching total';
                 totalElements[1].textContent = 'Error fetching Mama Pays';
-                expenseList.innerHTML = '<div class="expense-card text-center text-red-500 text-sm">Error loading expenses</div>';
-                movieList.innerHTML = '<div class="movie-card text-center text-red-500 text-sm">Error loading movies</div>';
+                expenseList.innerHTML = '<div class="item-card text-center text-red-600 text-sm">Error loading expenses</div>';
+                movieList.innerHTML = '<div class="item-card text-center text-red-600 text-sm">Error loading movies</div>';
                 lastUpdatedElement.textContent = 'Error fetching last updated time';
                 console.error('Error:', error);
             }
