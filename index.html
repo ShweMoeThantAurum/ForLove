@@ -2,378 +2,309 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Love Ledger</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Open+Sans:wght@300;400&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will You Be My Valentine?</title>
+
     <style>
         body {
-            font-family: 'Open Sans', sans-serif;
-            background: linear-gradient(145deg, #FFDDE6 0%, #FFABC7 100%);
-            color: #3E1F2F;
-            min-height: 100vh;
-            padding: 1rem;
-            overflow-y: auto;
-        }
-
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 221, 230, 0.95);
+            margin: 0;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
             display: flex;
-            align-items: center;
             justify-content: center;
-            z-index: 1000;
-            opacity: 1;
-            transition: opacity 0.7s ease-out;
-        }
-
-        .loading-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loading-content {
-            text-align: center;
-            color: #C2185B;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .loading-heart {
-            width: 50px;
-            height: 50px;
-            background: #FF80AB;
-            position: relative;
-            transform: rotate(45deg);
-            margin: 0 auto 0.75rem;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        .loading-heart::before,
-        .loading-heart::after {
-            content: '';
-            width: 50px;
-            height: 50px;
-            background: #FF80AB;
-            border-radius: 50%;
-            position: absolute;
-        }
-
-        .loading-heart::before {
-            top: -25px;
-            left: 0;
-        }
-
-        .loading-heart::after {
-            left: -25px;
-            top: 0;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: rotate(45deg) scale(1);
-            }
-
-            25% {
-                transform: rotate(45deg) scale(1.2);
-            }
-
-            50% {
-                transform: rotate(45deg) scale(1);
-            }
-
-            75% {
-                transform: rotate(45deg) scale(1.1);
-            }
-
-            100% {
-                transform: rotate(45deg) scale(1);
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 1.2s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card {
-            background: #FFF5F7;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 6px 20px rgba(194, 24, 91, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 28px rgba(194, 24, 91, 0.2);
-        }
-
-        .item-card {
-            background: #FFE8ED;
-            border-radius: 8px;
-            padding: 0.75rem;
-            margin-bottom: 0.75rem;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            transition: background 0.3s ease;
-        }
-
-        .item-card:hover {
-            background: #FFCAD4;
-        }
-
-        .icon {
-            font-size: 1.5rem;
-            color: #C2185B;
-            transition: transform 0.3s ease;
-        }
-
-        .icon:hover {
-            transform: scale(1.2);
-        }
-
-        h1,
-        h2 {
-            font-family: 'Cormorant Garamond', serif;
-            color: #C2185B;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .hover-accent:hover {
-            color: #E91E63;
+            overflow: hidden;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .section-title {
+        .gif-header {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.6rem;
+            margin: 20px 0 40px;
+            color: #e74c3c;
+        }
+
+        .buttons {
             position: relative;
-            display: inline-block;
-            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            height: 90px;
+            flex-wrap: wrap;
         }
 
-        .section-title::after {
-            content: '';
-            width: 50%;
-            height: 2px;
-            background: #FF80AB;
+        button {
+            font-size: 1.5rem;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+            user-select: none;
+            min-width: 140px;
+        }
+
+        #yesBtn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.15);
+            background: #c0392b;
+        }
+
+        #noBtn {
+            background: #7f8c8d;
+            color: white;
             position: absolute;
-            bottom: -4px;
-            left: 25%;
         }
 
-        /* Mobile-specific styles */
-        @media (max-width: 640px) {
-            body {
-                padding: 0.75rem;
-            }
+        .celebration {
+            display: none;
+            font-size: 3.5rem;
+            color: #e74c3c;
+            margin-top: 30px;
+            animation: bounce 1s infinite;
+        }
 
-            h1 {
-                font-size: 2rem;
-                margin-bottom: 1.5rem;
-            }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
 
-            h2 {
-                font-size: 1.5rem;
-                margin-bottom: 1rem;
-            }
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
 
-            .card {
-                padding: 1rem;
-                margin-bottom: 1rem;
-            }
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            width: 100%;
+        }
 
-            .item-card {
-                padding: 0.5rem;
-                font-size: 0.875rem;
-            }
+        .modal-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
 
-            .loading-content {
-                font-size: 1rem;
-            }
+        .modal-content h2 {
+            color: #e74c3c;
+            margin: 10px 0 20px;
+            font-size: 2.2rem;
+        }
 
-            .loading-heart {
-                width: 40px;
-                height: 40px;
-            }
+        .date-info {
+            font-size: 1.35rem;
+            color: #444;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #f0caca;
+            line-height: 1.6;
+        }
 
-            .loading-heart::before,
-            .loading-heart::after {
-                width: 40px;
-                height: 40px;
-            }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+        }
 
-            .loading-heart::before {
-                top: -20px;
-            }
+        .close:hover {
+            color: #e74c3c;
+        }
 
-            .loading-heart::after {
-                left: -20px;
-            }
-
-            .icon {
-                font-size: 1.25rem;
-            }
-
+        /* ============================================= */
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
             .container {
-                max-width: 100%;
-                padding: 0 0.5rem;
+                padding: 30px 25px;
+                border-radius: 16px;
             }
 
-            .text-2xl {
+            p {
+                font-size: 1.4rem;
+                margin: 15px 0 30px;
+            }
+
+            .buttons {
+                gap: 40px;
+                height: auto;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            button {
+                font-size: 1.35rem;
+                padding: 14px 50px;
+                min-width: 180px;
+            }
+
+            #noBtn {
+                position: absolute;
+                /* still moves around, but container is smaller */
+            }
+
+            .celebration {
+                font-size: 2.6rem;
+            }
+
+            .modal-content {
+                padding: 24px 20px;
+            }
+
+            .modal-content h2 {
+                font-size: 1.9rem;
+            }
+
+            .date-info {
+                font-size: 1.2rem;
+            }
+
+            .close {
+                font-size: 2.2rem;
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            button {
                 font-size: 1.25rem;
+                padding: 12px 40px;
+                min-width: 160px;
             }
 
-            .text-sm {
-                font-size: 0.75rem;
+            .modal-content {
+                padding: 20px 16px;
             }
         }
     </style>
 </head>
 
 <body>
+
     <div class="container">
-        <h1 class="text-5xl font-semibold mb-10 text-center hover-accent">Our Love Ledger</h1>
-        <!-- Loading Overlay -->
-        <div id="loading" class="loading-overlay">
-            <div class="loading-content">
-                <div class="loading-heart"></div>
-                <p>Crafting our love story...</p>
-            </div>
+        <img src="https://i.pinimg.com/originals/c5/0a/c9/c50ac977b8a89140fc3f7bcb1a05e146.gif" class="gif-header"
+            alt="Romantic gif" />
+
+        <p>Will you be my Valentine, Mama? ❤️</p>
+
+        <div class="buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
         </div>
-        <!-- Content Container -->
-        <div id="content" style="display: none;">
-            <!-- Total Section -->
-            <div id="total" class="card fade-in">
-                <h2 class="text-3xl font-semibold mb-6 text-center section-title">Our Shared Costs</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-center">
-                    <p class="text-2xl font-semibold hover-accent"></p>
-                    <p class="text-2xl font-semibold hover-accent"></p>
-                </div>
-            </div>
-            <!-- Expenses Section -->
-            <div id="expenses" class="card fade-in">
-                <h2 class="text-3xl font-semibold mb-6 text-center section-title">Our Dining Adventures</h2>
-                <div id="expenseList"></div>
-            </div>
-            <!-- Movies Section -->
-            <div id="movies" class="card fade-in">
-                <h2 class="text-3xl font-semibold mb-6 text-center section-title">Movies We Watched Together</h2>
-                <div id="movieList"></div>
-            </div>
-            <!-- Last Updated -->
-            <div id="lastUpdated" class="card fade-in">
-                <div class="flex items-center justify-center gap-3">
-                    <i class="fas fa-heart icon"></i>
-                    <p class="last-updated-text text-sm"></p>
-                </div>
-            </div>
-            <!-- Warning Section -->
-            <div class="card fade-in">
-                <div class="flex items-center justify-center gap-3 text-red-600">
-                    <i class="fas fa-exclamation-circle icon"></i>
-                    <p class="text-sm">အကြွေးမဆပ်ပါက လူကိုသိမ်းရမည်။</p>
-                </div>
-            </div>
+
+        <div id="celebration" class="celebration">Yay! 💕 I love you!</div>
+    </div>
+
+    <!-- ===== MODAL ===== -->
+    <div id="dateModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+
+            <h2>Be ready for our date! 💕</h2>
+
+            <img src="https://i.pinimg.com/originals/7c/64/6f/7c646f136ddddd35debe5d0da95ed5c3.gif"
+                alt="Romantic celebration gif">
+
+            <p style="font-size: 1.3rem; color: #555; margin: 20px 0;">
+                Dress up nicely!
+            </p>
+
+            <p class="date-info">
+                Thursday, 12 February 2026 at 17:15<br>
+                FIRE Steakhouse & Bar<br>
+            </p>
         </div>
     </div>
+
     <script>
-        async function fetchData() {
-            const loadingElement = document.getElementById('loading');
-            const contentElement = document.getElementById('content');
-            const totalElements = document.getElementById('total').querySelectorAll('p');
-            const expenseList = document.getElementById('expenseList');
-            const movieList = document.getElementById('movieList');
-            const lastUpdatedElement = document.getElementById('lastUpdated').querySelector('.last-updated-text');
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const buttons = document.querySelector('.buttons');
+        const celebration = document.getElementById('celebration');
+        const modal = document.getElementById('dateModal');
+        const closeBtn = document.querySelector('.close');
 
-            // Show loading, hide content
-            loadingElement.classList.remove('hidden');
-            contentElement.style.display = 'none';
+        function moveNoButton() {
+            const area = buttons.getBoundingClientRect();
+            const btn = noBtn.getBoundingClientRect();
 
-            try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbwAYFxTLLq-bDmGXLnU5TS2WVBS8lfIMgCJw5EqjoIaG_VEN2tFWm6S-5mmaumFrr2z/exec');
-                const data = await response.json();
+            const maxX = area.width - btn.width;
+            const maxY = area.height - btn.height;
 
-                // Hide loading, show content
-                loadingElement.classList.add('hidden');
-                contentElement.style.display = 'block';
-
-                // Update total and mama pays
-                totalElements[0].textContent = `Total: €${data.total}`;
-                totalElements[1].textContent = `Mama Pays: €${(data.total / 2).toFixed(2)}`;
-                totalElements[0].parentElement.classList.add('fade-in');
-
-                // Update expenses
-                const validExpenses = data.expenses.filter(e => Number.isFinite(Number(e.amount)) && Number(e.amount) > 0);
-                const expenseDate = new Date(data.lastUpdated).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                expenseList.innerHTML = validExpenses.map(e => `
-                    <div class="item-card">
-                        <span class="text-sm">${e.restaurant || 'N/A'} (${expenseDate})</span>
-                        <span class="text-sm font-semibold">€${Number(e.amount).toFixed(2)}</span>
-                    </div>
-                `).join('');
-                expenseList.parentElement.classList.add('fade-in');
-
-                // Update movies
-                movieList.innerHTML = data.movies.map(movie => `
-                    <div class="item-card">
-                        <span class="text-sm">${movie}</span>
-                    </div>
-                `).join('');
-                movieList.parentElement.classList.add('fade-in');
-
-                // Update last updated
-                const updatedTime = new Date(data.lastUpdated).toLocaleString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
-                });
-                lastUpdatedElement.textContent = `Our love story updated on ${updatedTime}`;
-                lastUpdatedElement.parentElement.classList.add('fade-in');
-            } catch (error) {
-                // Hide loading, show content with error messages
-                loadingElement.classList.add('hidden');
-                contentElement.style.display = 'block';
-
-                totalElements[0].textContent = 'Error fetching total';
-                totalElements[1].textContent = 'Error fetching Mama Pays';
-                expenseList.innerHTML = '<div class="item-card text-center text-red-600 text-sm">Error loading expenses</div>';
-                movieList.innerHTML = '<div class="item-card text-center text-red-600 text-sm">Error loading movies</div>';
-                lastUpdatedElement.textContent = 'Error fetching last updated time';
-                console.error('Error:', error);
-            }
+            noBtn.style.left = `${Math.random() * maxX}px`;
+            noBtn.style.top = `${Math.random() * maxY}px`;
         }
-        fetchData();
-        setInterval(fetchData, 900000);
+
+        noBtn.addEventListener('mouseenter', moveNoButton);
+        noBtn.addEventListener('mousemove', moveNoButton);
+        noBtn.addEventListener('touchstart', e => {
+            e.preventDefault();
+            moveNoButton();
+        });
+        noBtn.addEventListener('click', e => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        yesBtn.addEventListener('click', () => {
+            celebration.style.display = 'block';
+            yesBtn.textContent = 'My Valentine! 🥰';
+            yesBtn.disabled = true;
+            modal.style.display = 'flex';
+        });
+
+        function resetPage() {
+            modal.style.display = 'none';
+            location.reload();
+        }
+
+        closeBtn.addEventListener('click', resetPage);
+
+        window.addEventListener('click', e => {
+            if (e.target === modal) resetPage();
+        });
     </script>
+
 </body>
 
 </html>
