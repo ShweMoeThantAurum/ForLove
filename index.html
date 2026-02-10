@@ -25,8 +25,6 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             max-width: 90%;
-            width: 100%;
-            box-sizing: border-box;
         }
 
         .gif-header {
@@ -47,7 +45,6 @@
             justify-content: center;
             gap: 60px;
             height: 90px;
-            flex-wrap: wrap;
         }
 
         button {
@@ -58,7 +55,6 @@
             cursor: pointer;
             transition: transform 0.15s ease;
             user-select: none;
-            min-width: 140px;
         }
 
         #yesBtn {
@@ -86,8 +82,15 @@
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
         }
 
         /* ===== MODAL ===== */
@@ -99,8 +102,6 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 15px;
-            box-sizing: border-box;
         }
 
         .modal-content {
@@ -109,11 +110,10 @@
             border-radius: 20px;
             text-align: center;
             max-width: 90%;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
             position: relative;
-            width: 100%;
         }
 
         .modal-content img {
@@ -152,68 +152,51 @@
             color: #e74c3c;
         }
 
-        /* ============================================= */
-        /* Mobile responsiveness */
-        @media (max-width: 600px) {
+        /* ===== MOBILE RESPONSIVE ONLY ===== */
+        @media (max-width: 768px) {
             .container {
-                padding: 30px 25px;
-                border-radius: 16px;
+                padding: 25px 20px;
             }
 
             p {
-                font-size: 1.4rem;
-                margin: 15px 0 30px;
+                font-size: 1.3rem;
             }
 
             .buttons {
-                gap: 40px;
-                height: auto;
-                flex-direction: column;
-                align-items: center;
+                gap: 30px;
+                height: 100px;
             }
 
             button {
-                font-size: 1.35rem;
-                padding: 14px 50px;
-                min-width: 180px;
-            }
-
-            #noBtn {
-                position: absolute;
-                /* still moves around, but container is smaller */
+                font-size: 1.2rem;
+                padding: 14px 28px;
             }
 
             .celebration {
-                font-size: 2.6rem;
-            }
-
-            .modal-content {
-                padding: 24px 20px;
+                font-size: 2.5rem;
             }
 
             .modal-content h2 {
-                font-size: 1.9rem;
+                font-size: 1.8rem;
             }
 
             .date-info {
-                font-size: 1.2rem;
-            }
-
-            .close {
-                font-size: 2.2rem;
-                right: 15px;
+                font-size: 1.15rem;
             }
         }
 
-        @media (max-width: 400px) {
-            button {
-                font-size: 1.25rem;
-                padding: 12px 40px;
-                min-width: 160px;
+        @media (max-width: 480px) {
+            .buttons {
+                height: 120px;
             }
 
-            .modal-content {
-                padding: 20px 16px;
+            button {
+                font-size: 1.1rem;
+                padding: 12px 24px;
+            }
+
+            .celebration {
+                font-size: 2.2rem;
             }
         }
     </style>
