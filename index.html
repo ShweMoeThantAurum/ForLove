@@ -1,265 +1,692 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="my">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Will You Be My Valentine?</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 — ဘေဘီနဲ့မမ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Myanmar:wght@300;400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+:root {
+  --white: #fafaf8;
+  --off: #f2f0eb;
+  --ink: #111110;
+  --mid: #6b6b68;
+  --faint: #d8d6d0;
+  --accent: #b8936a;
+  --accent-light: #e8d5c0;
+}
 
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px 60px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            max-width: 90%;
-        }
+html { scroll-behavior: smooth; }
 
-        .gif-header {
-            max-width: 100%;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
+body {
+  background: var(--white);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-        /* ✅ FIXED TEXT LINE */
-        p {
-            font-size: 1.6rem;
-            margin: 20px auto 40px;
-            color: #e74c3c;
-            white-space: nowrap;
-            display: inline-block;
-        }
+.serif { font-family: 'Playfair Display', Georgia, serif; }
+.myanmar { font-family: 'Noto Serif Myanmar', serif; }
 
-        .buttons {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            height: 90px;
-        }
+/* Progress line */
+#progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 1px;
+  background: var(--accent);
+  width: 0%;
+  z-index: 100;
+  transition: width 0.1s linear;
+}
 
-        button {
-            font-size: 1.5rem;
-            padding: 16px 40px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.15s ease;
-            user-select: none;
-        }
+/* Nav */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2.5rem;
+}
 
-        #yesBtn {
-            background: #e74c3c;
-            color: white;
-        }
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--mid);
+  letter-spacing: 0.05em;
+}
 
-        #yesBtn:hover {
-            transform: scale(1.15);
-            background: #c0392b;
-        }
+.nav-count {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
 
-        #noBtn {
-            background: #7f8c8d;
-            color: white;
-            position: absolute;
-        }
+/* Section base */
+section {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
 
-        .celebration {
-            display: none;
-            font-size: 3.5rem;
-            color: #e74c3c;
-            margin-top: 30px;
-            animation: bounce 1s infinite;
-        }
+/* Hero */
+#hero {
+  background: var(--white);
+  padding: 0 5vw;
+  overflow: hidden;
+}
 
-        @keyframes bounce {
+.hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
 
-            0%,
-            100% {
-                transform: translateY(0);
-            }
+.hero-number {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(9rem, 28vw, 22rem);
+  font-weight: 700;
+  line-height: 0.85;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--faint);
+  user-select: none;
+  animation: fade-up 1.2s cubic-bezier(.16,1,.3,1) forwards;
+  opacity: 0;
+}
 
-            50% {
-                transform: translateY(-15px);
-            }
-        }
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fade-up 1.4s cubic-bezier(.16,1,.3,1) 0.2s forwards;
+  opacity: 0;
+}
 
-        /* ===== MODAL ===== */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
+.hero-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
 
-        .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            max-width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            position: relative;
-        }
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--ink);
+}
 
-        .modal-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            margin: 15px 0;
-        }
+.hero-sub {
+  font-family: 'Noto Serif Myanmar', serif;
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  line-height: 2;
+  color: var(--mid);
+  max-width: 340px;
+}
 
-        .modal-content h2 {
-            color: #e74c3c;
-            margin: 10px 0 20px;
-            font-size: 2.2rem;
-        }
+.hero-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+}
 
-        .date-info {
-            font-size: 1.35rem;
-            color: #444;
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px solid #f0caca;
-            line-height: 1.6;
-        }
+.scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--faint);
+  animation: fade-up 2s ease 1.5s forwards;
+  opacity: 0;
+}
 
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #555;
-            cursor: pointer;
-        }
+.scroll-cue::after {
+  content: '';
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--faint), transparent);
+}
 
-        .close:hover {
-            color: #e74c3c;
-        }
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-        /* 📱 MOBILE POLISH */
-        @media (max-width: 480px) {
-            .container {
-                max-width: 85%;
-                padding: 30px 25px;
-            }
+/* Quote section */
+#quote {
+  background: var(--ink);
+  padding: 0 6vw;
+  justify-content: center;
+}
 
-            p {
-                font-size: 1.4rem;
-            }
+.quote-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
 
-            button {
-                padding: 14px 30px;
-                font-size: 1.3rem;
-            }
-        }
-    </style>
+.quote-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4rem, 12vw, 8rem);
+  color: var(--accent);
+  line-height: 0.6;
+  display: block;
+  margin-bottom: 2rem;
+  opacity: 0.4;
+}
+
+.quote-text {
+  font-family: 'Noto Serif Myanmar', serif;
+  font-size: clamp(1.05rem, 2.5vw, 1.45rem);
+  line-height: 2.4;
+  color: var(--off);
+  font-weight: 300;
+}
+
+.quote-text em {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--accent-light);
+}
+
+.quote-attr {
+  margin-top: 3rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+/* Letter */
+#letter {
+  background: var(--white);
+  padding: 8vh 5vw;
+  min-height: auto;
+}
+
+.letter-wrap {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.letter-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--faint);
+  padding-bottom: 1.5rem;
+  margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.letter-from {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-style: italic;
+  color: var(--ink);
+}
+
+.letter-date {
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+.letter-body {
+  font-family: 'Noto Serif Myanmar', serif;
+  font-size: clamp(0.92rem, 2vw, 1.05rem);
+  line-height: 2.3;
+  color: #2a2a28;
+}
+
+.letter-body p { margin-bottom: 2rem; }
+
+.letter-body .em {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.letter-body .strong {
+  color: var(--ink);
+  border-bottom: 1px solid var(--accent-light);
+  padding-bottom: 1px;
+}
+
+.letter-vow {
+  margin: 3rem 0;
+  padding: 2rem 2.5rem;
+  border-left: 2px solid var(--accent);
+  background: var(--off);
+}
+
+.letter-vow p {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  font-style: italic;
+  line-height: 2;
+  color: var(--ink);
+  margin: 0;
+}
+
+.letter-sign {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--faint);
+  text-align: right;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  color: var(--mid);
+  line-height: 2;
+}
+
+/* Timeline */
+#timeline {
+  background: var(--off);
+  padding: 10vh 5vw;
+  min-height: auto;
+}
+
+.timeline-wrap {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 4rem;
+  line-height: 1.2;
+}
+
+.tl-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.5rem 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--faint);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.tl-item:last-child { border-bottom: 1px solid var(--faint); }
+
+.tl-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tl-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--accent-light);
+  line-height: 1;
+  padding-top: 0.2rem;
+}
+
+.tl-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 0.5rem;
+}
+
+.tl-text {
+  font-family: 'Noto Serif Myanmar', serif;
+  font-size: clamp(0.88rem, 1.8vw, 0.98rem);
+  line-height: 2;
+  color: #3a3a38;
+}
+
+/* Closing */
+#closing {
+  background: var(--white);
+  padding: 0 5vw;
+  text-align: center;
+  overflow: hidden;
+}
+
+.closing-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.closing-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(6rem, 22vw, 16rem);
+  font-weight: 700;
+  color: var(--off);
+  line-height: 1;
+  user-select: none;
+  position: relative;
+}
+
+.closing-num::after {
+  content: '♡';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.18em;
+  color: var(--accent);
+  font-family: sans-serif;
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%       { transform: translate(-50%, -50%) scale(1.14); }
+}
+
+.closing-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+.closing-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--faint), transparent);
+}
+
+.closing-vow {
+  font-family: 'Noto Serif Myanmar', serif;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  line-height: 2.2;
+  color: var(--mid);
+  max-width: 480px;
+}
+
+.closing-vow strong {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  color: var(--ink);
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.closing-sig {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--mid);
+  padding-top: 1rem;
+  border-top: 1px solid var(--faint);
+  width: 100%;
+  text-align: center;
+}
+
+/* Reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  nav { padding: 1.2rem 1.3rem; }
+
+  #hero { padding: 0 1.3rem; }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 7rem 0 5rem;
+    gap: 1rem;
+  }
+
+  .hero-number {
+    font-size: clamp(7rem, 38vw, 11rem);
+    -webkit-text-stroke: 1px var(--faint);
+    text-align: center;
+  }
+
+  .hero-right { align-items: center; }
+  .hero-sub { text-align: center; max-width: 100%; }
+  .scroll-cue { bottom: 1.5rem; }
+
+  #quote { padding: 5rem 1.5rem; min-height: auto; }
+
+  #letter { padding: 5rem 1.3rem; }
+  .letter-vow { padding: 1.4rem 1.3rem; }
+  .letter-body p { margin-bottom: 1.5rem; }
+
+  #timeline { padding: 5rem 1.3rem; }
+
+  .tl-item {
+    grid-template-columns: 52px 1fr;
+    gap: 1rem 1.2rem;
+    padding: 1.5rem 0;
+  }
+  .tl-num { font-size: 1.8rem; }
+
+  #closing { padding: 4rem 1.3rem; min-height: auto; }
+  .closing-inner { gap: 1.5rem; }
+  .closing-line { height: 40px; }
+}
+
+@media (max-width: 380px) {
+  .letter-body { font-size: 0.88rem; line-height: 2.1; }
+  .tl-text { font-size: 0.85rem; }
+  .closing-vow { font-size: 0.92rem; }
+}
+</style>
 </head>
-
 <body>
 
-    <div class="container">
-        <img src="https://i.pinimg.com/originals/c5/0a/c9/c50ac977b8a89140fc3f7bcb1a05e146.gif" class="gif-header"
-            alt="Romantic gif" />
+<div id="progress"></div>
 
-        <p>Will you be my Valentine, Mama? ❤️</p>
+<nav>
+  <span class="nav-logo">ဘေဘီ &amp; မမ</span>
+  <span class="nav-count">10 months</span>
+</nav>
 
-        <div class="buttons">
-            <button id="yesBtn">Yes</button>
-            <button id="noBtn">No</button>
-        </div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-number">10</div>
+    <div class="hero-right">
+      <span class="hero-label">Anniversary · May 2025</span>
+      <div class="hero-divider"></div>
+      <h1 class="hero-title serif">Happy<br>10 months,<br><em>မမ</em></h1>
+      <p class="hero-sub myanmar">ဆယ်လကနေ တစ်နှစ်၊ တစ်နှစ်ကနေ နှစ်ပေါင်းရာချီ…</p>
+    </div>
+  </div>
+  <div class="scroll-cue">scroll</div>
+</section>
 
-        <div id="celebration" class="celebration">Yay! 💕 I love you!</div>
+<!-- QUOTE -->
+<section id="quote">
+  <div class="quote-inner reveal">
+    <span class="quote-mark serif">"</span>
+    <p class="quote-text myanmar">
+      မမကြောင့် ဘေဘီ့ဘဝလေး <em>အရောင်တွေစုံ</em>၊<br>
+      ဘေဘီ့အတွက် တွန်းအားတွေ ဖြစ်ပေးခဲ့လို့<br>
+      ကျေးဇူးအများကြီး တင်ပါတယ်နော် မမ။
+    </p>
+    <p class="quote-attr">— ဘေဘီ · 10 months</p>
+  </div>
+</section>
+
+<!-- LETTER -->
+<section id="letter">
+  <div class="letter-wrap">
+    <div class="letter-header reveal">
+      <span class="letter-from serif">Happy 10 months ပါမမ ♡</span>
+      <span class="letter-date">May 13, 2025</span>
     </div>
 
-    <!-- ===== MODAL ===== -->
-    <div id="dateModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
+    <div class="letter-body myanmar reveal">
+      <p>
+        ဘာလိုလိုနဲ့ ဘေဘီနဲ့မမ သမီးရည်းစားဖြစ်တာ <span class="strong">ဆယ်လတောင်ရှိပြီနော်</span>။ တစ်နှစ်ဆိုတာ မဝေးတော့တဲ့ တစ်နေရာမှာ။
+      </p>
+      <p>
+        ဒီဆယ်လ၊ မမနဲ့ဘေဘီ စသိတဲ့အချိန်ကနေ စမယ်ဆို <span class="em">ဆယ့်သုံးလ</span> — အဲ့ဆယ့်သုံးလအတွင်း မမကြောင့် ဘေဘီ့ဘဝလေး အရောင်တွေစုံ၊ ဘေဘီ့အတွက် တွန်းအားတွေ ဖြစ်ပေးခဲ့လို့ ကျေးဇူးအများကြီး တင်ပါတယ်နော် မမ။
+      </p>
+      <p>
+        အဲ့လို ဘေဘီ့ဘဝကြီးက မမကြောင့် အိုခေမှာ စိုပြေနေတော့ ဘေဘီဖြင့် 'မမနဲ့ဘေဘီပျက်မယ်၊ ဘေဘီအရင်တစ်ယောက်တည်းဖြစ်ခဲ့တုန်းကအချိန်တွေဖြစ်ခဲ့လို့ ရှိခဲ့မှန်းတောင် မတွေးဖြစ်' — ဆိုတာမျိုး မတွေးဖြစ်တော့ဘူး။
+      </p>
+      <p>
+        နောက်… ဘေဘီနဲ့မမနဲ့က တစ်ယောက်ကို တစ်ယောက် <span class="em">ပါရမီဖြည့်ဖက်လို</span> ပြုမူပေးနေတယ် ခံစားရတော့ 'ဘေဘီနဲ့မမ ပျက်သွားရင် ဘေဘီ ဘယ်လိုနေရမယ်ဖြင့်' မတွေးဖြစ်ဘူး။
+      </p>
+      <p>
+        သို့ပေသည့် ချစ်မမက တကယ် မပျက်ရင်တောင်၊ စိတ်ကူးဖြင့် တွေးပြီး ပျက်ပေးပါ တောင်းဆိုတော့ — အောက်ကအတွေးတွေကို တွေးမိပြီး စာစီလိုက်သည်ပေါ့။
+      </p>
+      <p>
+        မမဆိုသည့်အတိုင်း မတော်၍ ဘေဘီနဲ့မမ ပျက်ခဲ့လျှင် ဘေဘီ့ဘဝကြီး <span class="strong">အမှောင်ကျသွားတော့ သေချာတယ်</span>။ အိုင်ယာလန်မှာဘဲ ဆက်နေဖြစ်အုံးမယ်ဆိုရင် ပို၍တောင် မှောင်မှာပေါ့ — ဘေဘီနဲ့ ရွယ်တူသူငယ်ချင်းမရှိ၊ နှစ်ရှည်ပေါင်းလာတဲ့ သူငယ်ချင်းလည်း တစ်ယောက်မှ မရှိတော့ ဘေဘီ တစ်ယောက်တည်း အထီးကျန်ပြီး အခန်းထဲမှာ ပိတ်နေဖြစ်မယ်ထင်တယ်။
+      </p>
+      <p>
+        အပြင်ထွက်ဖြစ်တောင် လိုအပ်လို့ လိုအပ်တာ ထွက်ဝယ်တာဘဲ ဖြစ်မယ် — မမနဲ့တူတူ <span class="em">လျှောက်ခဲ့ဖူးတဲ့ လမ်းတွေ</span> ရောက်မှာ အသေအချာဘဲ၊ အဲ့လမ်းပေါ်မှာ မမနဲ့တူတူ ကုန်ဆုံးခဲ့ဖူးတဲ့ အခိုက်အတန့်တွေက ဘေဘီ့အတွေးထဲ ပြေးဝင်လာမှာဘဲ။
+      </p>
+      <p>
+        နောက်တစ်ခုကတော့ — <span class="strong">နှစ်ယောက်စားဖို့ တွေးပြီး ချက်တာ</span>ကနေ တစ်ယောက်စာအတွက်ဘဲ ချက်ရတော့မယ်ဆိုတော့ ထမင်းဟင်းချက်ရင်း၊ ထမင်းဟင်းစားရင်းလည်း မမ့ကို သတိရမှာ သေချာနေတာဘဲ။ ကိုရီယားဇာတ်လမ်းတွဲတွေလည်း အချိန်တစ်ခုကြာ ကြည့်ဖြစ်တော့မှာ မထင်ဘူး။ အဆိုးဆုံးကတော့ အဝတ်အစားတွေကို အချိန်တစ်ခုကြာ ဝယ်ဖြစ်တော့မှာ မဟုတ်တာ သေချာတယ်။
+      </p>
+      <p>
+        ဘေဘီ မမရဲ့ <span class="em">အပြုံးတွေ</span>၊ မမရဲ့ <span class="em">ဟာသတွေ</span>၊ မမရဲ့ <span class="em">ရယ်သံတွေ</span>၊ မမရဲ့ <span class="em">နောက်ပြောင်တာတွေ</span>၊ မမရဲ့ <span class="em">ချွဲတာတွေ</span>၊ မမရဲ့… မမရဲ့… မမရဲ့ <span class="strong">အကုန်လုံးကို</span> — အခိုက်အတန့်တွေ တိုက်ဆိုင်တိုင်း ဘေဘီ့နှလုံးကို လာအောင့်စေမှာ တော့သေချာတယ်။
+      </p>
+      <p>
+        ဒါတွေကတော့ မတော်၍နောက်က ဖြစ်လာမယ့်အရာတွေပေါ့။ ဒါတွေ ရေးရတယ်ဆိုတာလည်း မမအနေနဲ့ သိချင်လို့ ရေးပေးရတာ — ဘေဘီ့သဘောဆို မတော်၍ ဆိုပြီး တွေးရတာကို <span class="strong">မကြိုက်တာ</span>။ ဘာလို့ဆို မမနဲ့ အဲ့မတော်၍ မရှိစေချင်လို့ဘဲ။
+      </p>
 
-            <h2>Be ready for our date! 💕</h2>
+      <div class="letter-vow">
+        <p class="serif">
+          "ဒီတော့ အဲ့မတော်၍တွေ ဖြစ်မလာဖို့လည်း မျှော်လင့်တယ်၊ ဖြစ်လာခွင့်လည်း ဘာအကြောင်းကြောင့်နဲ့မှ ပေးမှာမဟုတ်ဘူး — ဆိုရရင် ဆက်ချစ်ဖို့ဘဲ ရှိတယ်၊ လက်ချင်းချိတ် နှစ်ယောက်တူတူ ဆက်လျှောက်လှမ်းဖို့ဘဲ ရှိတယ်။"
+        </p>
+      </div>
 
-            <img src="https://i.pinimg.com/originals/7c/64/6f/7c646f136ddddd35debe5d0da95ed5c3.gif"
-                alt="Romantic celebration gif">
+      <p style="text-align:center; line-height:2.6;">
+        ဆယ်လကနေ တစ်နှစ်၊<br>
+        တစ်နှစ်ကနေ <span class="strong">နှစ်ပေါင်းရာချီ</span>၊<br>
+        နှစ်ပေါင်းရာချီမှသည် <span class="em">သံသရာ အဆက်ဆက်</span><br>
+        ဘဝများစွာ ဆက်၍ ချစ်သွားဖို့တာ ရှိပါတယ်။
+      </p>
 
-            <p style="font-size: 1.3rem; color: #555; margin: 20px 0;">
-                Dress up nicely!
-            </p>
+      <div class="letter-sign serif">
+        မမ့ကိုချစ်တဲ့<br>ဘေဘီ ♡
+      </div>
+    </div>
+  </div>
+</section>
 
-            <p class="date-info">
-                Thursday, 12 February 2026 at 17:15<br>
-                FIRE Steakhouse & Bar
-            </p>
-        </div>
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="timeline-wrap">
+    <p class="section-label reveal">Ten months</p>
+    <h2 class="section-title serif reveal">ဆယ်လ၊ ဆယ်ထိမ်<br><span style="font-size:0.6em;color:var(--mid);font-style:italic;">ten months of little moments</span></h2>
+
+    <div class="tl-item">
+      <div class="tl-num serif">01</div>
+      <div>
+        <p class="tl-label">Month 1–3 · The Beginning</p>
+        <p class="tl-text myanmar">မမနဲ့ ဘေဘီ စတွေ့တဲ့အချိန် — ဆယ့်သုံးလ ကြာပြီ၊ ဒါပေမဲ့ ခုချိန်ထိ ဘေဘီ့ဘဝကို ဒီလောက် ပြောင်းလဲ ခဲ့မှန်းတောင် မသိ။</p>
+      </div>
     </div>
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const buttons = document.querySelector('.buttons');
-        const celebration = document.getElementById('celebration');
-        const modal = document.getElementById('dateModal');
-        const closeBtn = document.querySelector('.close');
+    <div class="tl-item">
+      <div class="tl-num serif">04</div>
+      <div>
+        <p class="tl-label">Month 4–6 · Growing Roots</p>
+        <p class="tl-text myanmar">ပါရမီဖြည့်ဖက်တစ်ယောက်ကို ဘေဘီ တွေ့ဆုံခဲ့တဲ့အချိန် — မမနဲ့ပဲ ကောင်းမှကောင်းမယ်ဆိုတာ ဘေဘီ သိလာတဲ့အချိန်ပေါ့။</p>
+      </div>
+    </div>
 
-        function moveNoButton() {
-            const area = buttons.getBoundingClientRect();
-            const btn = noBtn.getBoundingClientRect();
+    <div class="tl-item">
+      <div class="tl-num serif">07</div>
+      <div>
+        <p class="tl-label">Month 7–9 · Dublin Days</p>
+        <p class="tl-text myanmar">အိုင်ယာလန်မှာ မမနဲ့တူတူ လမ်းလျှောက်ခဲ့တဲ့ အမှတ်တရတွေ — ဒီလမ်းတွေ ဒီနေရာတွေ ဘေဘီ ကြည့်တိုင်း မမ့ကို သတိရတဲ့ နေရာတွေ ဖြစ်ခဲ့တယ်နော်။</p>
+      </div>
+    </div>
 
-            const maxX = area.width - btn.width;
-            const maxY = area.height - btn.height;
+    <div class="tl-item">
+      <div class="tl-num serif" style="color:var(--accent);">10</div>
+      <div>
+        <p class="tl-label">Month 10 · Right Now ♡</p>
+        <p class="tl-text myanmar">ဒီနေ့ — ဒီစာဖတ်နေတဲ့ မမနဲ့ ဘေဘီ ဆက်ရှိနေတဲ့ ဒီအခိုက်အတန့်ကို ဘေဘီ ချစ်တယ်နော်မမ။</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-            noBtn.style.left = `${Math.random() * maxX}px`;
-            noBtn.style.top = `${Math.random() * maxY}px`;
-        }
+<!-- CLOSING -->
+<section id="closing">
+  <div class="closing-inner">
+    <div class="closing-num serif reveal">10</div>
+    <p class="closing-label reveal">months · and counting</p>
+    <div class="closing-line"></div>
+    <div class="closing-vow myanmar reveal">
+      <strong class="serif">"ဆက်ချစ်ဖို့ဘဲ ရှိတယ်"</strong>
+      လက်ချင်းချိတ် နှစ်ယောက်တူတူ<br>
+      ဆယ်လကနေ တစ်နှစ်၊ နှစ်ပေါင်းရာချီ၊<br>
+      သံသရာ အဆက်ဆက် ဆက်လျှောက်လှမ်းဖို့…
+    </div>
+    <div class="closing-line"></div>
+    <p class="closing-sig reveal">မမ့ကိုချစ်တဲ့ ဘေဘီ &nbsp;♡&nbsp; May 2025</p>
+  </div>
+</section>
 
-        noBtn.addEventListener('mouseenter', moveNoButton);
-        noBtn.addEventListener('mousemove', moveNoButton);
-        noBtn.addEventListener('touchstart', e => {
-            e.preventDefault();
-            moveNoButton();
-        });
-        noBtn.addEventListener('click', e => {
-            e.preventDefault();
-            moveNoButton();
-        });
+<script>
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
 
-        yesBtn.addEventListener('click', () => {
-            celebration.style.display = 'block';
-            yesBtn.textContent = 'My Valentine! 🥰';
-            yesBtn.disabled = true;
-            modal.style.display = 'flex';
-        });
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
 
-        function resetPage() {
-            modal.style.display = 'none';
-            location.reload();
-        }
-
-        closeBtn.addEventListener('click', resetPage);
-
-        window.addEventListener('click', e => {
-            if (e.target === modal) resetPage();
-        });
-    </script>
-
+document.querySelectorAll('.reveal, .tl-item').forEach((el, i) => {
+  if (el.classList.contains('tl-item')) el.style.transitionDelay = (i % 4 * 0.12) + 's';
+  io.observe(el);
+});
+</script>
 </body>
-
 </html>
